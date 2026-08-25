@@ -48,7 +48,7 @@ const certificates = [
   },
 ];
 
-export default function Certificates() {
+export default function Certificates({ standalone = true }: { standalone?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -57,14 +57,16 @@ export default function Certificates() {
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
 
-  return (
-    <section id="certificates" className="relative py-24 md:py-32 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
-          title="Certificates"
-          subtitle="Professional certifications and achievements."
-        />
-      </div>
+  const content = (
+    <>
+      {standalone && (
+        <div className="mx-auto max-w-7xl px-6">
+          <SectionHeading
+            title="Certificates"
+            subtitle="Professional certifications and achievements."
+          />
+        </div>
+      )}
 
       {/* Draggable Horizontal Carousel */}
       <div ref={containerRef} className="relative">
@@ -109,6 +111,14 @@ export default function Certificates() {
           <span>Drag to browse</span>
         </div>
       </div>
+    </>
+  );
+
+  if (!standalone) return content;
+
+  return (
+    <section id="certificates" className="relative py-24 md:py-32 overflow-hidden">
+      {content}
     </section>
   );
 }

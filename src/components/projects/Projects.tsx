@@ -107,7 +107,7 @@ function GitHubRepoCard({ repo, index }: { repo: GitHubRepo; index: number }) {
 /* ============================================
    Projects Section
    ============================================ */
-export default function Projects() {
+export default function Projects({ standalone = true }: { standalone?: boolean }) {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -135,17 +135,16 @@ export default function Projects() {
     fetchRepos();
   }, []);
 
-  return (
-    <section id="projects" className="relative py-24 md:py-32">
-      <div className="pointer-events-none absolute right-0 top-1/3 h-72 w-72 rounded-full bg-accent-blue/3 blur-3xl" />
-
-      <div className="mx-auto max-w-7xl px-6">
+  const content = (
+    <>
+      {standalone && (
         <SectionHeading
           title="Projects"
           subtitle="A curated selection of work that showcases my skills and interests."
         />
+      )}
 
-        {/* Bento Grid — Asymmetric Layout */}
+      {/* Bento Grid — Asymmetric Layout */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[280px]">
           {staticProjects.map((project, i) => (
             <ProjectCard key={project.title} {...project} index={i} />
@@ -189,7 +188,15 @@ export default function Projects() {
             </p>
           )}
         </motion.div>
-      </div>
+    </>
+  );
+
+  if (!standalone) return content;
+
+  return (
+    <section id="projects" className="relative py-24 md:py-32">
+      <div className="pointer-events-none absolute right-0 top-1/3 h-72 w-72 rounded-full bg-accent-blue/3 blur-3xl" />
+      <div className="mx-auto max-w-7xl px-6">{content}</div>
     </section>
   );
 }

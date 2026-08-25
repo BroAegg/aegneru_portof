@@ -4,9 +4,7 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/navbar/Navbar";
 import Hero from "@/components/hero/Hero";
 import About from "@/components/about/About";
-import Projects from "@/components/projects/Projects";
-import Certificates from "@/components/certificates/Certificates";
-import TechStack from "@/components/techstack/TechStack";
+import ShowcaseSection from "@/components/showcase/ShowcaseSection";
 import Contact from "@/components/contact/Contact";
 import Guestbook from "@/components/guestbook/Guestbook";
 import Footer from "@/components/footer/Footer";
@@ -31,15 +29,7 @@ export default function Home() {
 
         <div className="section-divider mx-auto max-w-7xl" />
 
-        <Projects />
-
-        <div className="section-divider mx-auto max-w-7xl" />
-
-        <Certificates />
-
-        <div className="section-divider mx-auto max-w-7xl" />
-
-        <TechStack />
+        <ShowcaseSection />
 
         <div className="section-divider mx-auto max-w-7xl" />
 
