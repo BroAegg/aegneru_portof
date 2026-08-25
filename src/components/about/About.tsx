@@ -22,7 +22,7 @@ export default function About() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.7, ease: [0, 0, 0.2, 1] }}
             className="flex justify-center lg:col-span-2"
           >
             <div className="group relative">
@@ -49,7 +49,7 @@ export default function About() {
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+            transition={{ duration: 0.7, ease: [0, 0, 0.2, 1], delay: 0.2 }}
             className="lg:col-span-3"
           >
             <div className="space-y-5 text-base leading-relaxed text-muted sm:text-lg">

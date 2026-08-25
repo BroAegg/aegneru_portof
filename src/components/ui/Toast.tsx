@@ -65,7 +65,7 @@ function ToastItem({
         scale: isVisible ? 1 : 0.95,
       }}
       exit={{ opacity: 0, x: 50, scale: 0.95 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
       className={`flex items-center gap-3 rounded-xl border ${borderColor} bg-dark-card/95 px-4 py-3 shadow-2xl backdrop-blur-sm min-w-[300px]`}
     >
       {icon}

@@ -18,7 +18,7 @@ export default function SectionHeading({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
       className={`mb-16 ${align === "center" ? "text-center" : "text-left"}`}
     >
       <h2 className="font-heading text-4xl font-bold tracking-tight text-foreground md:text-5xl">
