@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import GlowCard from "@/components/ui/GlowCard";
+import IntegrationsSection from "@/components/ui/integrations-component";
 
 interface TechItem {
   name: string;
@@ -150,78 +151,48 @@ const techItems: TechItem[] = [
       </svg>
     ),
   },
-  {
-    name: "Git",
-    category: "Tools",
-    color: "#F05032",
-    svg: (
-      <svg className="h-12 w-12" viewBox="0 0 24 24" fill="none">
-        <path d="M21.6 10.7L13.3 2.4a1.7 1.7 0 00-2.4 0L8.5 4.8l3.1 3.1a2 2 0 012.3 2.3l2.8 2.8a2 2 0 11-1.2 1.2l-2.6-2.6v4.6a2 2 0 11-1.8 0V11.2a2 2 0 01-1.1-1.1L6.9 7 2.4 11.5a1.7 1.7 0 000 2.4l8.3 8.3a1.7 1.7 0 002.4 0l8.5-8.5a1.7 1.7 0 000-2.4z" fill="#F05032" />
-      </svg>
-    ),
-  },
-  {
-    name: "OpenCV",
-    category: "Tools",
-    color: "#5C3EE8",
-    svg: (
-      <svg className="h-12 w-12" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="7" r="4.5" stroke="#E52521" strokeWidth="2.2" />
-        <circle cx="7" cy="16" r="4.5" stroke="#43B02A" strokeWidth="2.2" />
-        <circle cx="17" cy="16" r="4.5" stroke="#00A3E0" strokeWidth="2.2" />
-      </svg>
-    ),
-  },
-  {
-    name: "Figma",
-    category: "Tools",
-    color: "#F24E1E",
-    svg: (
-      <svg className="h-12 w-12" viewBox="0 0 24 24" fill="none">
-        <path d="M8 24a4 4 0 01-4-4 4 4 0 014-4h4v4a4 4 0 01-4 4z" fill="#0ACF83" />
-        <path d="M4 12a4 4 0 014-4h4v8H8a4 4 0 01-4-4z" fill="#A259FF" />
-        <path d="M4 4a4 4 0 014-4h4v8H8a4 4 0 01-4-4z" fill="#F24E1E" />
-        <path d="M12 0h4a4 4 0 014 4 4 4 0 01-4 4h-4V0z" fill="#FF7262" />
-        <circle cx="16" cy="12" r="4" fill="#1ABCFE" />
-      </svg>
-    ),
-  },
-  {
-    name: "Vercel",
-    category: "Tools",
-    color: "#FFFFFF",
-    svg: (
-      <svg className="h-12 w-12" viewBox="0 0 24 24" fill="none">
-        <path d="M12 1L24 22H0L12 1Z" fill="#FFF" />
-      </svg>
-    ),
-  },
 ];
 
 export default function TechStackGrid() {
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
-      {techItems.map((item, index) => (
-        <motion.div
-          key={item.name}
-          initial={{ opacity: 0, y: 25, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.4, delay: index * 0.04, ease: [0, 0, 0.2, 1] }}
-          whileHover={{ y: -6, scale: 1.02 }}
-        >
-          <GlowCard
-            glowColor={`${item.color}25`}
-            className="group flex h-36 flex-col items-center justify-center gap-3.5 p-5 text-center transition-all duration-300 hover:border-accent/40"
+    <div className="space-y-16">
+      {/* 1. Sleek Grid of Tech Cards */}
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+        {techItems.map((item, index) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, y: 25, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.4, delay: index * 0.04, ease: [0, 0, 0.2, 1] }}
+            whileHover={{ y: -6, scale: 1.02 }}
           >
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-dark/60 p-2.5 transition-transform duration-300 group-hover:scale-110">
-              {item.svg}
-            </div>
-            <span className="font-heading text-sm font-semibold text-foreground tracking-wide transition-colors group-hover:text-accent">
-              {item.name}
-            </span>
-          </GlowCard>
-        </motion.div>
-      ))}
+            <GlowCard
+              glowColor={`${item.color}25`}
+              className="group flex h-36 flex-col items-center justify-center gap-3.5 p-5 text-center transition-all duration-300 hover:border-accent/40"
+            >
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-dark/60 p-2.5 transition-transform duration-300 group-hover:scale-110">
+                {item.svg}
+              </div>
+              <span className="font-heading text-sm font-semibold text-foreground tracking-wide transition-colors group-hover:text-accent">
+                {item.name}
+              </span>
+            </GlowCard>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* 2. Integrations & Workflow Section (shadcn Card + Button layout) */}
+      <div className="border-t border-dark-border/60 pt-12">
+        <div className="mb-8 text-center">
+          <h3 className="font-heading text-2xl font-bold text-foreground">
+            Workflow & Ecosystem Integrations
+          </h3>
+          <p className="mt-2 text-sm text-muted">
+            Seamlessly connected platforms and tools powering end-to-end development.
+          </p>
+        </div>
+        <IntegrationsSection />
+      </div>
     </div>
   );
 }
