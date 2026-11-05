@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { motion, type Variants } from "framer-motion";
-import { ArrowUpRight, Mail, Sparkles, Github, Linkedin, Instagram } from "lucide-react";
+import { ArrowUpRight, Mail, Sparkles, Github, Linkedin, FileText } from "lucide-react";
 import dynamic from "next/dynamic";
 import MagneticButton from "@/components/ui/MagneticButton";
 
@@ -19,7 +19,15 @@ const Scene3D = dynamic(() => import("./Scene3D"), {
 /* ============================================
    Typewriter Effect
    ============================================ */
-const techStack = ["React", "Next.js", "Node.js", "Python", "Supabase", "TypeScript"];
+const techStack = [
+  "Next.js 14",
+  "React.js",
+  "TypeScript",
+  "Laravel 11",
+  "Python & ML",
+  "PostgreSQL",
+  "IoT & ESP32",
+];
 
 function TypewriterText() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -123,7 +131,7 @@ export default function Hero() {
           <motion.div variants={itemVariants}>
             <span className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5 text-xs font-medium text-accent">
               <Sparkles className="h-3.5 w-3.5" />
-              Ready to Innovate
+              Available for Software Engineer Roles
             </span>
           </motion.div>
 
@@ -132,9 +140,9 @@ export default function Hero() {
             variants={itemVariants}
             className="font-heading text-5xl font-extrabold leading-[1.1] tracking-tight text-foreground sm:text-6xl lg:text-7xl"
           >
-            Fullstack
+            Aegner
             <br />
-            <span className="gradient-text">Developer</span>
+            <span className="gradient-text">Billik</span>
           </motion.h1>
 
           {/* Typewriter */}
@@ -142,7 +150,7 @@ export default function Hero() {
             variants={itemVariants}
             className="font-heading text-lg font-medium text-muted sm:text-xl"
           >
-            Tech | <TypewriterText />
+            Engineering | <TypewriterText />
           </motion.div>
 
           {/* Description */}
@@ -150,14 +158,16 @@ export default function Hero() {
             variants={itemVariants}
             className="max-w-lg text-base leading-relaxed text-muted/80 sm:text-lg"
           >
-            Crafting innovative, functional, and user-friendly websites
-            for modern digital solutions.
+            Informatics Engineering at UMB (GPA 3.75). Architecting resilient fullstack platforms, offline-first systems, and real-time IoT solutions with clean, maintainable code.
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-3">
             <MagneticButton href="#projects" variant="primary">
               Projects <ArrowUpRight className="h-4 w-4" />
+            </MagneticButton>
+            <MagneticButton href="/CV_Aegner_Billik.pdf" variant="secondary">
+              <FileText className="h-4 w-4" /> Resume
             </MagneticButton>
             <MagneticButton href="#contact" variant="secondary">
               <Mail className="h-4 w-4" /> Contact
@@ -172,14 +182,14 @@ export default function Hero() {
               label="GitHub"
             />
             <SocialLink
-              href="https://linkedin.com"
+              href="https://linkedin.com/in/aegner-billik"
               icon={Linkedin}
               label="LinkedIn"
             />
             <SocialLink
-              href="https://instagram.com"
-              icon={Instagram}
-              label="Instagram"
+              href="mailto:aegneru@gmail.com"
+              icon={Mail}
+              label="Email"
             />
           </motion.div>
         </motion.div>

@@ -104,6 +104,14 @@ export default function Navbar() {
               )}
             </button>
           ))}
+          <a
+            href="/CV_Aegner_Billik.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-2 rounded-lg border border-accent/40 bg-accent/10 px-3.5 py-1.5 text-xs font-semibold text-accent transition-all duration-300 hover:bg-accent hover:text-white"
+          >
+            Resume ↗
+          </a>
         </div>
 
         {/* Mobile Hamburger */}
@@ -143,6 +151,14 @@ export default function Navbar() {
                   {link.label}
                 </motion.button>
               ))}
+              <a
+                href="/CV_Aegner_Billik.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 rounded-lg border border-accent/40 bg-accent/10 px-4 py-3 text-center text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
+              >
+                View Resume / CV ↗
+              </a>
             </div>
           </motion.div>
         )}

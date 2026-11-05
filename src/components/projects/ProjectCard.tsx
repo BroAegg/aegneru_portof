@@ -50,7 +50,8 @@ export default function ProjectCard({
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-muted opacity-0 transition-all duration-300 hover:bg-dark-hover hover:text-accent group-hover:opacity-100"
+                  className="rounded-lg border border-dark-border bg-dark/60 p-2 text-muted transition-all duration-300 hover:border-accent/40 hover:bg-dark-hover hover:text-accent"
+                  aria-label={`View code for ${title}`}
                 >
                   <ExternalLink className="h-4 w-4" />
                 </a>
@@ -58,7 +59,18 @@ export default function ProjectCard({
             </div>
 
             <h3 className="font-heading text-xl font-bold text-foreground mb-3 sm:text-2xl">
-              {title}
+              {href ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-accent"
+                >
+                  {title}
+                </a>
+              ) : (
+                title
+              )}
             </h3>
             <p className="text-sm leading-relaxed text-muted sm:text-base">
               {description}

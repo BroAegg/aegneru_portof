@@ -17,24 +17,27 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Aegneru — Fullstack Developer Portfolio",
+  title: "Aegner Billik — Software Engineer & Fullstack Developer",
   description:
-    "Personal portfolio of Aegner, a Fullstack Developer specializing in React, Next.js, Node.js, Python, and Supabase. Crafting innovative and user-friendly digital solutions.",
+    "Personal portfolio of Aegner Billik, Software Engineer and Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75). Experienced in Next.js, React, Laravel, TypeScript, Python, PostgreSQL, and IoT systems.",
   keywords: [
+    "Aegner Billik",
+    "software engineer",
     "fullstack developer",
     "portfolio",
-    "web developer",
     "react",
     "next.js",
     "typescript",
+    "laravel",
     "python",
-    "supabase",
+    "postgresql",
+    "iot",
   ],
-  authors: [{ name: "Aegner", url: "https://github.com/BroAegg" }],
+  authors: [{ name: "Aegner Billik", url: "https://github.com/BroAegg" }],
   openGraph: {
-    title: "Aegneru — Fullstack Developer Portfolio",
+    title: "Aegner Billik — Software Engineer & Fullstack Developer",
     description:
-      "Crafting innovative, functional, and user-friendly websites for modern digital solutions.",
+      "Engineering resilient fullstack platforms, offline-first systems, and industrial IoT solutions.",
     type: "website",
     locale: "en_US",
   },

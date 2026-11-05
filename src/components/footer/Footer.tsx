@@ -12,10 +12,10 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <span className="font-heading text-lg font-bold gradient-text">
-              Aegneru
+              Aegner Billik
             </span>
             <p className="mt-1 text-xs text-muted">
-              Fullstack Developer Portfolio
+              Software Engineer & Fullstack Developer
             </p>
           </div>
 
@@ -23,8 +23,7 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             {[
               { href: "https://github.com/BroAegg", icon: Github, label: "GitHub" },
-              { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-              { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
+              { href: "https://linkedin.com/in/aegner-billik", icon: Linkedin, label: "LinkedIn" },
             ].map(({ href, icon: Icon, label }) => (
               <a
                 key={label}
@@ -41,8 +40,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="flex items-center gap-1 text-xs text-muted/50">
-            © {currentYear} Aegneru. Built with{" "}
-            <Heart className="inline h-3 w-3 text-accent" /> and Next.js
+            © {currentYear} Aegner Billik. All rights reserved.
           </p>
         </div>
       </div>

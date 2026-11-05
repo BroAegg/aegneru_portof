@@ -17,6 +17,7 @@ const staticProjects = [
     description:
       "Full-featured enterprise platform for Koperasi UMB handling member savings, loans via payroll deductions, General Ledger accounting, and an offline-first Android tablet POS with native Bluetooth thermal printing via IndexedDB.",
     tags: ["Laravel 11", "React.js", "PostgreSQL", "Capacitor", "IndexedDB", "Bluetooth SPP"],
+    href: "https://github.com/BroAegg/Web_Koperasi_UMBandung",
     size: "large" as const,
   },
   {
@@ -24,6 +25,7 @@ const staticProjects = [
     description:
       "Modern university portal and multi-tenant CMS for academic accreditation (Biotechnology, Fashion Craft, FST) with high-performance SSR and dynamic document archival.",
     tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST API"],
+    href: "https://github.com/BroAegg/cms_prodi_tekpang_umbandung",
     size: "medium" as const,
   },
   {
@@ -31,13 +33,15 @@ const staticProjects = [
     description:
       "Industrial manufacturing tracking system connecting ESP32 microcontrollers and RFID readers to live web dashboards via bidirectional WebSockets and Redis pub/sub.",
     tags: ["ESP32", "RFID", "WebSockets", "Redis", "React.js", "C/C++"],
+    href: "https://github.com/BroAegg/Monitoring-QC-RFID",
     size: "medium" as const,
   },
   {
-    title: "OCR e-KTP Document Extraction",
+    title: "OCR e-KTP Document Extraction & ML Pipeline",
     description:
       "Automated document processing pipeline for university admissions using OpenCV computer vision filters, Tesseract OCR, and regex parsing to digitize national ID cards.",
     tags: ["Python", "OpenCV", "Tesseract OCR", "RegEx", "Machine Learning"],
+    href: "https://github.com/BroAegg/proyek_MachineLearning_analisis_data",
     size: "medium" as const,
   },
   {
@@ -45,6 +49,15 @@ const staticProjects = [
     description:
       "Audio DSP and deep learning system extracting Mel-Frequency Cepstral Coefficients (MFCC) to classify audio tracks across 10 musical genres with a CNN architecture.",
     tags: ["PyTorch", "Librosa", "CNN", "Streamlit", "Audio DSP"],
+    href: "https://github.com/BroAegg/Music_Genre_Classification",
+    size: "medium" as const,
+  },
+  {
+    title: "ZIS & Waqf Financial Management System",
+    description:
+      "Standard PSAK 109 Islamic finance and donation accounting portal with interactive real-time nisab calculator, audit logs, and automated invoice PDF receipts.",
+    tags: ["Laravel", "Livewire", "Tailwind CSS", "MySQL", "Financial Accounting"],
+    href: "https://github.com/BroAegg/Lazismu_Lengkong-php",
     size: "medium" as const,
   },
 ];
