@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { User } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function About() {
@@ -13,7 +13,7 @@ export default function About() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           title="About Me"
-          subtitle="A passionate developer building solutions from front to back."
+          subtitle="A passionate software engineer building resilient solutions from front to back."
         />
 
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-5 lg:gap-16">
@@ -31,15 +31,18 @@ export default function About() {
 
               {/* Photo frame */}
               <div className="relative h-72 w-72 overflow-hidden rounded-3xl border border-dark-border bg-dark-card sm:h-80 sm:w-80">
-                {/* Placeholder — replace with actual photo */}
-                <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-muted">
-                  <User className="h-16 w-16 text-dark-border" />
-                  <span className="text-sm text-muted/60">Your Photo Here</span>
-                </div>
+                <Image
+                  src="/profile.jpg"
+                  alt="Aegner Billik"
+                  fill
+                  sizes="(max-width: 640px) 288px, 320px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority
+                />
 
                 {/* Decorative corner accent */}
-                <div className="absolute -right-1 -top-1 h-20 w-20 rounded-bl-3xl border-b border-l border-accent/30" />
-                <div className="absolute -bottom-1 -left-1 h-20 w-20 rounded-tr-3xl border-t border-r border-accent-blue/30" />
+                <div className="absolute -right-1 -top-1 h-20 w-20 rounded-bl-3xl border-b border-l border-accent/30 pointer-events-none" />
+                <div className="absolute -bottom-1 -left-1 h-20 w-20 rounded-tr-3xl border-t border-r border-accent-blue/30 pointer-events-none" />
               </div>
             </div>
           </motion.div>
@@ -54,27 +57,25 @@ export default function About() {
           >
             <div className="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
               <p>
-                I&apos;m an Informatics Engineering student with a deep passion for
-                end-to-end software development. Currently, I&apos;m completing my
-                final thesis focused on building an{" "}
-                <span className="text-foreground font-medium">
-                  Optical Character Recognition (OCR) system
-                </span>{" "}
-                using Python, OpenCV, and Tesseract.
+                I&apos;m an Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75/4.00, graduating January 2027), focused on building resilient fullstack architectures and real-time systems.
               </p>
               <p>
-                In the academic sphere, I serve as a{" "}
+                My production experience includes engineering{" "}
                 <span className="text-foreground font-medium">
-                  Web Design Lab Assistant
-                </span>
-                , where I evaluate and design assessment rubrics for student lab
-                modules. Beyond web development, I enjoy exploring creative
-                ideas — one of which involves designing a hybrid indie game
-                that combines{" "}
-                <span className="text-foreground font-medium">
-                  Real-Time Strategy (RTS)
+                  Koperasi UMB&apos;s ERP & hybrid offline POS system
                 </span>{" "}
-                mechanics with Minesweeper puzzles.
+                (with native Bluetooth thermal printing & IndexedDB sync), architecting multi-tenant academic portals in{" "}
+                <span className="text-foreground font-medium">
+                  Next.js 14 and Tailwind CSS
+                </span>
+                , and deploying industrial{" "}
+                <span className="text-foreground font-medium">
+                  IoT telemetry dashboards
+                </span>{" "}
+                using ESP32, RFID, and WebSockets.
+              </p>
+              <p>
+                As a graduate of Google Bangkit Academy 2024 (Machine Learning Path) and recipient of the National P2MW Innovation Grant, I thrive at the intersection of robust backend logic, distributed databases, and high-performance user interfaces.
               </p>
             </div>
 

@@ -13,24 +13,38 @@ import type { GitHubRepo } from "@/lib/supabase";
    ============================================ */
 const staticProjects = [
   {
-    title: "Python-Based OCR System",
+    title: "Koperasi UMB — Enterprise ERP & Hybrid POS",
     description:
-      "Final thesis project for optical character recognition from images. Built with a robust pipeline using OpenCV for preprocessing and Tesseract for text extraction, enabling accurate document digitization.",
-    tags: ["Python", "OpenCV", "Tesseract", "Machine Learning"],
+      "Full-featured enterprise platform for Koperasi UMB handling member savings, loans via payroll deductions, General Ledger accounting, and an offline-first Android tablet POS with native Bluetooth thermal printing via IndexedDB.",
+    tags: ["Laravel 11", "React.js", "PostgreSQL", "Capacitor", "IndexedDB", "Bluetooth SPP"],
     size: "large" as const,
   },
   {
-    title: "ProjectM × RTS",
+    title: "Academic Portal & Accreditation CMS",
     description:
-      "Indie game concept set in a marine ecosystem, focused on algae and coral reef preservation. Combines real-time strategy elements with puzzle mechanics for an educational gaming experience.",
-    tags: ["Game Dev", "RTS", "Minesweeper", "Indie"],
+      "Modern university portal and multi-tenant CMS for academic accreditation (Biotechnology, Fashion Craft, FST) with high-performance SSR and dynamic document archival.",
+    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST API"],
     size: "medium" as const,
   },
   {
-    title: "Web Design Assessment Platform",
+    title: "Real-Time Factory QC Telemetry (IoT)",
     description:
-      "Structured assessment system and rubrics designed for evaluating web design lab modules for the IF 24 C class.",
-    tags: ["Education", "Web Design", "Assessment"],
+      "Industrial manufacturing tracking system connecting ESP32 microcontrollers and RFID readers to live web dashboards via bidirectional WebSockets and Redis pub/sub.",
+    tags: ["ESP32", "RFID", "WebSockets", "Redis", "React.js", "C/C++"],
+    size: "medium" as const,
+  },
+  {
+    title: "OCR e-KTP Document Extraction",
+    description:
+      "Automated document processing pipeline for university admissions using OpenCV computer vision filters, Tesseract OCR, and regex parsing to digitize national ID cards.",
+    tags: ["Python", "OpenCV", "Tesseract OCR", "RegEx", "Machine Learning"],
+    size: "medium" as const,
+  },
+  {
+    title: "Deep Learning Audio Genre Classifier",
+    description:
+      "Audio DSP and deep learning system extracting Mel-Frequency Cepstral Coefficients (MFCC) to classify audio tracks across 10 musical genres with a CNN architecture.",
+    tags: ["PyTorch", "Librosa", "CNN", "Streamlit", "Audio DSP"],
     size: "medium" as const,
   },
 ];
