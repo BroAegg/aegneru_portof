@@ -1,12 +1,12 @@
 "use client";
 
 import SectionHeading from "@/components/ui/SectionHeading";
-import ProjectCard from "./ProjectCard";
+import ProjectCard, { type ProjectItem } from "./ProjectCard";
 
 /* ============================================
-   Curated Featured Projects Data
+   Curated Featured Projects Data (6 Symmetrical Cards)
    ============================================ */
-const projects = [
+const projects: ProjectItem[] = [
   {
     title: "Koperasi UMB — Enterprise ERP & Hybrid POS",
     description:
@@ -15,17 +15,17 @@ const projects = [
     liveUrl: "https://bermadaniumbandung.id",
     href: "https://github.com/BroAegg/Web_Koperasi_UMBandung",
     image: "/projects/koperasi-bermadani.png",
-    size: "large" as const,
+    visualType: "browser",
   },
   {
     title: "Academic Portal & Accreditation CMS",
     description:
-      "Official academic portal and multi-tenant CMS for university accreditation (Food Technology & Biotechnology) with high-performance SSR and dynamic archival.",
+      "Official academic portal and multi-tenant CMS for university accreditation (Food Technology & Biotechnology) with high-performance SSR and dynamic document archival.",
     tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST API"],
     liveUrl: "https://tekpang.umbandung.ac.id/",
     href: "https://github.com/BroAegg/cms_prodi_tekpang_umbandung",
     image: "/projects/tekpang.png",
-    size: "medium" as const,
+    visualType: "browser",
   },
   {
     title: "OCR e-KTP Document Extraction & ML Pipeline",
@@ -35,15 +35,15 @@ const projects = [
     liveUrl: "https://ocr-pmb-umbandung.vercel.app/",
     href: "https://github.com/BroAegg/proyek_MachineLearning_analisis_data",
     image: "/projects/ocr-pmb.png",
-    size: "medium" as const,
+    visualType: "browser",
   },
   {
     title: "Real-Time Factory QC Telemetry (IoT)",
     description:
       "Industrial manufacturing tracking system connecting ESP32 microcontrollers and RFID readers to live web dashboards via bidirectional WebSockets and Redis pub/sub.",
-    tags: ["ESP32", "RFID", "WebSockets", "Redis", "React.js", "C/C++"],
+    tags: ["ESP32", "RFID RC522", "WebSockets", "Redis", "React.js", "C/C++"],
     href: "https://github.com/BroAegg/Monitoring-QC-RFID",
-    size: "medium" as const,
+    visualType: "iot",
   },
   {
     title: "Deep Learning Audio Genre Classifier",
@@ -51,15 +51,15 @@ const projects = [
       "Audio DSP and deep learning system extracting Mel-Frequency Cepstral Coefficients (MFCC) to classify audio tracks across 10 musical genres with a CNN architecture.",
     tags: ["PyTorch", "Librosa", "CNN", "Streamlit", "Audio DSP"],
     href: "https://github.com/BroAegg/Music_Genre_Classification",
-    size: "medium" as const,
+    visualType: "audio",
   },
   {
     title: "ZIS & Waqf Financial Management System",
     description:
       "Standard PSAK 109 Islamic finance and donation accounting portal with interactive real-time nisab calculator, audit logs, and automated invoice PDF receipts.",
-    tags: ["Laravel", "Livewire", "Tailwind CSS", "MySQL", "Financial Accounting"],
+    tags: ["Laravel", "Livewire", "Tailwind CSS", "MySQL", "PSAK 109 Accounting"],
     href: "https://github.com/BroAegg/Lazismu_Lengkong-php",
-    size: "medium" as const,
+    visualType: "finance",
   },
 ];
 
@@ -76,8 +76,8 @@ export default function Projects({ standalone = true }: { standalone?: boolean }
         />
       )}
 
-      {/* Bento Grid — Asymmetric Layout */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {/* Symmetrical 3x2 Grid (No awkward voids, perfectly aligned) */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, i) => (
           <ProjectCard key={project.title} {...project} index={i} />
         ))}
