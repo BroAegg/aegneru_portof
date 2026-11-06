@@ -20,9 +20,21 @@ const projects = [
   {
     title: "Academic Portal & Accreditation CMS",
     description:
-      "Modern university portal and multi-tenant CMS for academic accreditation (Biotechnology, Food Technology, FST) with high-performance SSR and dynamic document archival.",
+      "Official academic portal and multi-tenant CMS for university accreditation (Food Technology & Biotechnology) with high-performance SSR and dynamic archival.",
     tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST API"],
+    liveUrl: "https://tekpang.umbandung.ac.id/",
     href: "https://github.com/BroAegg/cms_prodi_tekpang_umbandung",
+    image: "/projects/tekpang.png",
+    size: "medium" as const,
+  },
+  {
+    title: "OCR e-KTP Document Extraction & ML Pipeline",
+    description:
+      "Automated document processing pipeline for university admissions using OpenCV computer vision filters, Tesseract OCR, and regex parsing to digitize national ID cards.",
+    tags: ["Next.js", "Python", "OpenCV", "Tesseract OCR", "Machine Learning"],
+    liveUrl: "https://ocr-pmb-umbandung.vercel.app/",
+    href: "https://github.com/BroAegg/proyek_MachineLearning_analisis_data",
+    image: "/projects/ocr-pmb.png",
     size: "medium" as const,
   },
   {
@@ -31,14 +43,6 @@ const projects = [
       "Industrial manufacturing tracking system connecting ESP32 microcontrollers and RFID readers to live web dashboards via bidirectional WebSockets and Redis pub/sub.",
     tags: ["ESP32", "RFID", "WebSockets", "Redis", "React.js", "C/C++"],
     href: "https://github.com/BroAegg/Monitoring-QC-RFID",
-    size: "medium" as const,
-  },
-  {
-    title: "OCR e-KTP Document Extraction & ML Pipeline",
-    description:
-      "Automated document processing pipeline for university admissions using OpenCV computer vision filters, Tesseract OCR, and regex parsing to digitize national ID cards.",
-    tags: ["Python", "OpenCV", "Tesseract OCR", "RegEx", "Machine Learning"],
-    href: "https://github.com/BroAegg/proyek_MachineLearning_analisis_data",
     size: "medium" as const,
   },
   {
@@ -68,12 +72,12 @@ export default function Projects({ standalone = true }: { standalone?: boolean }
       {standalone && (
         <SectionHeading
           title="Featured Projects"
-          subtitle="Curated real-world systems engineered for production and business impact."
+          subtitle="Curated real-world systems engineered for production, verified impact, and live deployment."
         />
       )}
 
       {/* Bento Grid — Asymmetric Layout */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:auto-rows-[300px]">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {projects.map((project, i) => (
           <ProjectCard key={project.title} {...project} index={i} />
         ))}

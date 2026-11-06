@@ -82,9 +82,9 @@ export default function About() {
             {/* Quick Stats */}
             <div className="mt-8 grid grid-cols-3 gap-4">
               {[
-                { label: "Projects", value: "10+" },
-                { label: "Tech Stack", value: "12+" },
-                { label: "Experience", value: "3+ yrs" },
+                { label: "GPA / IPK (UMB)", value: "3.75" },
+                { label: "Projects Built", value: "10+" },
+                { label: "Verified Credentials", value: "25+" },
               ].map((stat, i) => (
                 <motion.div
                   key={stat.label}
