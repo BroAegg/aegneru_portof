@@ -182,7 +182,7 @@ export default function Hero() {
               label="GitHub"
             />
             <SocialLink
-              href="https://linkedin.com/in/aegner-billik"
+              href="https://www.linkedin.com/in/aegnerbillik/"
               icon={Linkedin}
               label="LinkedIn"
             />
