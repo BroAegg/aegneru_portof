@@ -12,7 +12,7 @@ const projects: ProjectItem[] = [
     description:
       "Autonomous cooperative ERP & POS engine with double-entry General Ledger (GL), offline-first tablet workstation via IndexedDB outbox sync, Bluetooth ESC/POS thermal printing, and statutory SHU RAT profit-sharing automation.",
     tags: ["Next.js", "React", "IndexedDB", "Double-Entry GL", "Bluetooth ESC/POS", "SHU RAT"],
-    liveUrl: "https://opencoop-enterprise-demo.vercel.app",
+    liveUrl: "https://opencoop-enterprise-demo.vercel.app/",
     href: "https://github.com/BroAegg/opencoop-enterprise-demo",
     image: "/projects/koperasi-bermadani.png",
     visualType: "browser",
