@@ -8,30 +8,30 @@ import ProjectCard, { type ProjectItem } from "./ProjectCard";
    ============================================ */
 const projects: ProjectItem[] = [
   {
-    title: "Koperasi UMB — Enterprise ERP & Hybrid POS",
+    title: "Manasuka / OpenCoop Enterprise ERP & Offline POS",
     description:
-      "Enterprise platform for Koperasi UMB (Bermadani) handling member savings, loan payroll deductions, General Ledger accounting, and offline-first tablet POS with native Bluetooth thermal printing via IndexedDB.",
-    tags: ["Laravel 11", "React.js", "PostgreSQL", "Capacitor", "IndexedDB", "Bluetooth SPP"],
-    liveUrl: "https://bermadaniumbandung.id",
-    href: "https://github.com/BroAegg/Web_Koperasi_UMBandung",
+      "Autonomous cooperative ERP & POS engine with double-entry General Ledger (GL), offline-first tablet workstation via IndexedDB outbox sync, Bluetooth ESC/POS thermal printing, and statutory SHU RAT profit-sharing automation.",
+    tags: ["Next.js", "React", "IndexedDB", "Double-Entry GL", "Bluetooth ESC/POS", "SHU RAT"],
+    liveUrl: "https://opencoop-enterprise-demo.vercel.app",
+    href: "https://github.com/BroAegg/opencoop-enterprise-demo",
     image: "/projects/koperasi-bermadani.png",
     visualType: "browser",
   },
   {
-    title: "Academic Portal & Accreditation CMS",
+    title: "Academic Accreditation Portal & Multi-Tenant CMS",
     description:
-      "Official academic portal and multi-tenant CMS for university accreditation (Food Technology & Biotechnology) with high-performance SSR and dynamic document archival.",
-    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST API"],
+      "High-performance academic portal and multi-tenant CMS for university accreditation (Tekpang UMB) achieving 100% Google Lighthouse SEO scores and sub-800ms page loads with Next.js 14 App Router, ISR, and PostgreSQL RBAC.",
+    tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST API", "ISR"],
     liveUrl: "https://tekpang.umbandung.ac.id/",
     href: "https://github.com/BroAegg/cms_prodi_tekpang_umbandung",
     image: "/projects/tekpang.png",
     visualType: "browser",
   },
   {
-    title: "OCR e-KTP Document Extraction & ML Pipeline",
+    title: "Automated Admissions Document OCR Pipeline",
     description:
-      "Automated document processing pipeline for university admissions using OpenCV computer vision filters, Tesseract OCR, and regex parsing to digitize national ID cards.",
-    tags: ["Next.js", "Python", "OpenCV", "Tesseract OCR", "Machine Learning"],
+      "Automated document extraction pipeline for university admissions achieving 94%+ character accuracy using OpenCV preprocessing filters, Tesseract OCR engine, and FastAPI microservices.",
+    tags: ["FastAPI", "Python", "OpenCV", "Tesseract OCR", "Next.js", "Computer Vision"],
     liveUrl: "https://ocr-pmb-umbandung.vercel.app/",
     href: "https://github.com/BroAegg/proyek_MachineLearning_analisis_data",
     image: "/projects/ocr-pmb.png",

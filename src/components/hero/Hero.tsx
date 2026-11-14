@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { motion, type Variants } from "framer-motion";
-import { ArrowUpRight, Mail, Sparkles, Github, Linkedin, FileText } from "lucide-react";
+import { ArrowUpRight, Mail, Sparkles, Github, Linkedin, FileText, MessageCircle } from "lucide-react";
 import dynamic from "next/dynamic";
 import MagneticButton from "@/components/ui/MagneticButton";
 
@@ -20,13 +20,12 @@ const Scene3D = dynamic(() => import("./Scene3D"), {
    Typewriter Effect
    ============================================ */
 const techStack = [
-  "Next.js 14",
-  "React.js",
-  "TypeScript",
-  "Laravel 11",
-  "Python & ML",
-  "PostgreSQL",
-  "IoT & ESP32",
+  "Fullstack & Backend",
+  "Next.js 14 & React",
+  "Node.js & PostgreSQL",
+  "Double-Entry Ledger (GL)",
+  "Offline POS (IndexedDB)",
+  "FastAPI & Machine Learning",
 ];
 
 function TypewriterText() {
@@ -36,7 +35,7 @@ function TypewriterText() {
 
   useEffect(() => {
     const currentWord = techStack[currentIndex];
-    const timeout = isDeleting ? 50 : 100;
+    const timeout = isDeleting ? 45 : 90;
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
@@ -129,9 +128,9 @@ export default function Hero() {
         >
           {/* Badge */}
           <motion.div variants={itemVariants}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5 text-xs font-medium text-accent">
-              <Sparkles className="h-3.5 w-3.5" />
-              Available for Software Engineer Roles
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent shadow-xs">
+              <Sparkles className="h-3.5 w-3.5 text-accent animate-pulse" />
+              Fullstack & Backend Engineer &bull; Bandung (Onsite & Remote)
             </span>
           </motion.div>
 
@@ -150,32 +149,35 @@ export default function Hero() {
             variants={itemVariants}
             className="font-heading text-lg font-medium text-muted sm:text-xl"
           >
-            Engineering | <TypewriterText />
+            Specializing in <TypewriterText />
           </motion.div>
 
           {/* Description */}
           <motion.p
             variants={itemVariants}
-            className="max-w-lg text-base leading-relaxed text-muted/80 sm:text-lg"
+            className="max-w-lg text-base leading-relaxed text-muted/90 sm:text-lg"
           >
-            Informatics Engineering at UMB (GPA 3.75). Architecting resilient fullstack platforms, offline-first systems, and real-time IoT solutions with clean, maintainable code.
+            Informatics Engineering graduate from Muhammadiyah University of Bandung (GPA 3.75/4.00, Graduated July 2026). Engineered autonomous cooperative ERPs (<strong className="text-foreground">0 downtime across 2+ months live</strong>), offline-first POS engines with IndexedDB, and high-performance academic portals.
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-3">
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-2.5">
             <MagneticButton href="#projects" variant="primary">
-              Projects <ArrowUpRight className="h-4 w-4" />
+              Featured Projects <ArrowUpRight className="h-4 w-4" />
             </MagneticButton>
             <MagneticButton href="/CV_Aegner_Billik.pdf" variant="secondary">
-              <FileText className="h-4 w-4" /> Resume
+              <FileText className="h-4 w-4" /> CV (PDF)
             </MagneticButton>
-            <MagneticButton href="#contact" variant="secondary">
-              <Mail className="h-4 w-4" /> Contact
+            <MagneticButton href="/Portofolio_Teknis_Aegner_Billik.pdf" variant="secondary">
+              <FileText className="h-4 w-4" /> Portfolio (PDF)
+            </MagneticButton>
+            <MagneticButton href="https://wa.me/62895416185355?text=Halo%20Aegner,%20kami%20tertarik%20dengan%20profil%20dan%20portofolio%20Anda" variant="secondary">
+              <MessageCircle className="h-4 w-4 text-emerald-400" /> WhatsApp
             </MagneticButton>
           </motion.div>
 
           {/* Social Links */}
-          <motion.div variants={itemVariants} className="flex gap-3 pt-4">
+          <motion.div variants={itemVariants} className="flex items-center gap-3 pt-2">
             <SocialLink
               href="https://github.com/BroAegg"
               icon={Github}
@@ -190,6 +192,11 @@ export default function Hero() {
               href="mailto:aegneru@gmail.com"
               icon={Mail}
               label="Email"
+            />
+            <SocialLink
+              href="https://wa.me/62895416185355?text=Halo%20Aegner,%20kami%20tertarik%20dengan%20profil%20dan%20portofolio%20Anda"
+              icon={MessageCircle}
+              label="WhatsApp"
             />
           </motion.div>
         </motion.div>

@@ -17,9 +17,9 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Aegner Billik — Software Engineer & Fullstack Developer",
+  title: "Aegner Billik — Fullstack & Backend Software Engineer",
   description:
-    "Personal portfolio of Aegner Billik, Software Engineer and Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75). Experienced in Next.js, React, Laravel, TypeScript, Python, PostgreSQL, and IoT systems.",
+    "Personal portfolio of Aegner Billik, Fullstack & Backend Software Engineer from Bandung, Indonesia (UMB Informatics Engineering, GPA 3.75). Experienced in Next.js 14, React, Node.js, PostgreSQL ACID, Offline IndexedDB POS, and FastAPI.",
   keywords: [
     "Aegner Billik",
     "software engineer",

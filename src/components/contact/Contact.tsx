@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, User, MessageSquare } from "lucide-react";
+import { Send, Mail, User, MessageSquare, MessageCircle, Linkedin, MapPin } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Toast, { useToast } from "@/components/ui/Toast";
 import { submitContact } from "@/lib/actions";
@@ -48,8 +48,48 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           title="Get in Touch"
-          subtitle="Have a project in mind or just want to say hello? Drop me a message."
+          subtitle="Have an open engineering position, contract, or project in mind? Let's connect directly."
         />
+
+        {/* Direct Channels Cluster for HR & CTOs */}
+        <div className="mx-auto mb-12 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+          <a
+            href="https://wa.me/62895416185355?text=Halo%20Aegner,%20kami%20tertarik%20dengan%20profil%20dan%20portofolio%20Anda"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col items-center justify-center rounded-2xl border border-dark-border bg-dark-card p-5 text-center transition-all duration-300 hover:border-emerald-500/50 hover:bg-emerald-500/5 hover:shadow-xl hover:shadow-emerald-500/5"
+          >
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform">
+              <MessageCircle className="h-5 w-5" />
+            </div>
+            <span className="font-heading text-sm font-bold text-foreground">WhatsApp Direct</span>
+            <span className="mt-0.5 text-xs text-muted">+62 895-4161-85355</span>
+          </a>
+
+          <a
+            href="mailto:aegneru@gmail.com"
+            className="group flex flex-col items-center justify-center rounded-2xl border border-dark-border bg-dark-card p-5 text-center transition-all duration-300 hover:border-accent/50 hover:bg-accent/5 hover:shadow-xl hover:shadow-accent/5"
+          >
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent group-hover:scale-110 transition-transform">
+              <Mail className="h-5 w-5" />
+            </div>
+            <span className="font-heading text-sm font-bold text-foreground">Email</span>
+            <span className="mt-0.5 text-xs text-muted">aegneru@gmail.com</span>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/aegnerbillik/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col items-center justify-center rounded-2xl border border-dark-border bg-dark-card p-5 text-center transition-all duration-300 hover:border-blue-500/50 hover:bg-blue-500/5 hover:shadow-xl hover:shadow-blue-500/5"
+          >
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
+              <Linkedin className="h-5 w-5" />
+            </div>
+            <span className="font-heading text-sm font-bold text-foreground">LinkedIn</span>
+            <span className="mt-0.5 text-xs text-muted">in/aegnerbillik</span>
+          </a>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -57,25 +57,24 @@ export default function About() {
           >
             <div className="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
               <p>
-                I&apos;m an Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75/4.00, graduating January 2027), focused on building resilient fullstack architectures and real-time systems.
+                I&apos;m an Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75/4.00, graduated July 2026), based in Bandung, Indonesia. Available immediately for Fullstack, Backend, and Software Engineer positions (both onsite and remote).
               </p>
               <p>
-                My production experience includes engineering{" "}
-                <span className="text-foreground font-medium">
-                  Koperasi UMB&apos;s ERP & hybrid offline POS system
+                My production experience includes building{" "}
+                <span className="text-foreground font-semibold">
+                  an autonomous enterprise cooperative ERP & offline-first POS system from scratch
                 </span>{" "}
-                (with native Bluetooth thermal printing & IndexedDB sync), architecting multi-tenant academic portals in{" "}
-                <span className="text-foreground font-medium">
-                  Next.js 14 and Tailwind CSS
+                (&gt;1 year dev, maintaining <strong className="text-emerald-400">0 downtime across 2+ months of live operational production</strong>), architecting multi-tenant academic accreditation portals in{" "}
+                <span className="text-foreground font-semibold">
+                  Next.js 14 and PostgreSQL
                 </span>
-                , and deploying industrial{" "}
-                <span className="text-foreground font-medium">
-                  IoT telemetry dashboards
-                </span>{" "}
-                using ESP32, RFID, and WebSockets.
+                , and developing automated document OCR microservices in{" "}
+                <span className="text-foreground font-semibold">
+                  FastAPI and OpenCV
+                </span>.
               </p>
               <p>
-                As a graduate of Google Bangkit Academy 2024 (Machine Learning Path) and recipient of the National P2MW Innovation Grant, I thrive at the intersection of robust backend logic, distributed databases, and high-performance user interfaces.
+                As a graduate of Google Bangkit Academy 2024 (Machine Learning Path) and recipient of the National P2MW Innovation Grant, I combine solid computer science fundamentals with modern software engineering practices, ACID-compliant database architectures, and pragmatic AI-assisted workflows.
               </p>
             </div>
 

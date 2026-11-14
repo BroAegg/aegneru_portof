@@ -23,7 +23,7 @@ const tabs: Tab[] = [
 ];
 
 export default function ShowcaseSection() {
-  const [activeTab, setActiveTab] = useState<TabId>("techstack");
+  const [activeTab, setActiveTab] = useState<TabId>("projects");
 
   // Listen to hash changes or custom events if user clicks navbar links
   useEffect(() => {
