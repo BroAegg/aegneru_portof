@@ -6,7 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function About() {
   return (
-    <section id="about" className="relative py-24 md:py-32">
+    <section id="about" className="relative py-24 md:py-32 scroll-mt-20 md:scroll-mt-24">
       {/* Background accent */}
       <div className="pointer-events-none absolute left-0 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-accent/3 blur-3xl" />
 

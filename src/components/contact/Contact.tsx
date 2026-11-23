@@ -42,7 +42,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-24 md:py-32">
+    <section id="contact" className="relative py-24 md:py-32 scroll-mt-20 md:scroll-mt-24">
       <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-accent/3 blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-6">

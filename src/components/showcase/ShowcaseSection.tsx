@@ -25,22 +25,45 @@ const tabs: Tab[] = [
 export default function ShowcaseSection() {
   const [activeTab, setActiveTab] = useState<TabId>("projects");
 
-  // Listen to hash changes or custom events if user clicks navbar links
+  const switchTab = (tabId: TabId) => {
+    setActiveTab(tabId);
+    window.history.replaceState(null, "", `#${tabId}`);
+    window.dispatchEvent(new CustomEvent("portfolio-tab-active", { detail: tabId }));
+  };
+
+  // Listen to hash changes or custom events from Navbar
   useEffect(() => {
-    const handleHashChange = () => {
+    const handleHashSync = () => {
       const hash = window.location.hash.replace("#", "");
       if (hash === "projects" || hash === "certificates" || hash === "techstack") {
         setActiveTab(hash as TabId);
+        window.dispatchEvent(new CustomEvent("portfolio-tab-active", { detail: hash }));
       }
     };
 
-    handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    const handleTabChange = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (
+        customEvent.detail &&
+        (customEvent.detail === "projects" ||
+          customEvent.detail === "certificates" ||
+          customEvent.detail === "techstack")
+      ) {
+        setActiveTab(customEvent.detail as TabId);
+      }
+    };
+
+    handleHashSync();
+    window.addEventListener("hashchange", handleHashSync);
+    window.addEventListener("portfolio-tab-change", handleTabChange);
+    return () => {
+      window.removeEventListener("hashchange", handleHashSync);
+      window.removeEventListener("portfolio-tab-change", handleTabChange);
+    };
   }, []);
 
   return (
-    <section id="showcase" className="relative py-24 md:py-32">
+    <section id="showcase" className="relative py-24 md:py-32 scroll-mt-20 md:scroll-mt-24">
       {/* Invisible anchors for direct navbar scrolling */}
       <div id="projects" className="absolute -top-24" />
       <div id="certificates" className="absolute -top-24" />
@@ -65,10 +88,7 @@ export default function ShowcaseSection() {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => {
-                    setActiveTab(tab.id);
-                    window.history.replaceState(null, "", `#${tab.id}`);
-                  }}
+                  onClick={() => switchTab(tab.id)}
                   className={`relative flex items-center gap-2.5 rounded-xl px-5 py-3 text-sm font-heading font-semibold transition-all duration-300 cursor-pointer sm:px-7 sm:py-3.5 ${
                     isActive
                       ? "text-white shadow-lg shadow-accent/20"

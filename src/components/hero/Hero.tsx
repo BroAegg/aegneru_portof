@@ -110,7 +110,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden pt-20"
+      className="relative flex min-h-screen items-center overflow-hidden pt-20 scroll-mt-20 md:scroll-mt-24"
     >
       {/* Background gradient orbs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">

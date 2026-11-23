@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -17,56 +17,111 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [activeShowcaseTab, setActiveShowcaseTab] = useState<string>("projects");
+  const showcaseTabRef = useRef("projects");
 
   useEffect(() => {
+    showcaseTabRef.current = activeShowcaseTab;
+  }, [activeShowcaseTab]);
+
+  // Track scroll position for navbar background solidifying (scrollY > 8)
+  useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 8);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Intersection Observer for active section
+  // Listen for tab changes from ShowcaseSection
   useEffect(() => {
-    const sections = navLinks.map((link) =>
-      document.querySelector(link.href)
-    );
+    const handleTabActive = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        setActiveShowcaseTab(customEvent.detail);
+      }
+    };
+    window.addEventListener("portfolio-tab-active", handleTabActive);
+
+    // Initial check from URL hash
+    const initialHash = window.location.hash.replace("#", "");
+    if (["projects", "certificates", "techstack"].includes(initialHash)) {
+      setActiveShowcaseTab(initialHash);
+      setActiveSection(initialHash);
+    }
+
+    return () => window.removeEventListener("portfolio-tab-active", handleTabActive);
+  }, []);
+
+  // Intersection Observer for active section on scroll
+  useEffect(() => {
+    const observedSectionIds = ["home", "about", "showcase", "contact"];
+    const sectionElements = observedSectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        // Select the visible entry with the highest intersection ratio
+        let bestEntry: IntersectionObserverEntry | null = null;
+        for (const entry of entries) {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            if (!bestEntry || entry.intersectionRatio > bestEntry.intersectionRatio) {
+              bestEntry = entry;
+            }
           }
-        });
+        }
+
+        if (bestEntry) {
+          const targetId = bestEntry.target.id;
+          if (targetId === "showcase") {
+            setActiveSection(showcaseTabRef.current);
+          } else {
+            setActiveSection(targetId);
+          }
+        }
       },
-      { rootMargin: "-40% 0px -50% 0px" }
+      {
+        rootMargin: "-20% 0px -40% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1.0],
+      }
     );
 
-    sections.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
+    sectionElements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
   const handleNavClick = (href: string) => {
     setIsMobileOpen(false);
-    const el = document.querySelector(href);
+    const target = href.replace("#", "");
+
+    if (["projects", "certificates", "techstack"].includes(target)) {
+      setActiveShowcaseTab(target);
+      setActiveSection(target);
+      window.history.replaceState(null, "", `#${target}`);
+      window.dispatchEvent(new CustomEvent("portfolio-tab-change", { detail: target }));
+      const showcaseEl = document.getElementById("showcase");
+      if (showcaseEl) {
+        showcaseEl.scrollIntoView({ behavior: "smooth" });
+      }
+      return;
+    }
+
+    const el = document.getElementById(target);
     if (el) {
+      setActiveSection(target);
+      window.history.replaceState(null, "", `#${target}`);
       el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "glass shadow-lg shadow-black/20"
-          : "bg-transparent"
+          ? "bg-[#09090b]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-lg shadow-black/40"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:h-20">
@@ -79,31 +134,36 @@ export default function Navbar() {
           }}
           className="font-heading text-xl font-bold tracking-tight"
         >
-          <span className="gradient-text">Aegneru</span>
+          <span className="gradient-text">Aegner Billik</span>
         </a>
 
         {/* Desktop Nav */}
         <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => handleNavClick(link.href)}
-              className={`relative rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-300 cursor-pointer ${
-                activeSection === link.href.slice(1)
-                  ? "text-foreground"
-                  : "text-muted hover:text-foreground"
-              }`}
-            >
-              {link.label}
-              {activeSection === link.href.slice(1) && (
-                <motion.div
-                  layoutId="activeSection"
-                  className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-gradient-to-r from-accent to-accent-blue"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
+          {navLinks.map((link) => {
+            const linkKey = link.href.slice(1);
+            const isActive = activeSection === linkKey;
+
+            return (
+              <button
+                key={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className={`relative rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-300 cursor-pointer ${
+                  isActive
+                    ? "text-foreground"
+                    : "text-muted hover:text-foreground"
+                }`}
+              >
+                {link.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeSection"
+                    className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-gradient-to-r from-accent to-accent-blue"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </button>
+            );
+          })}
           <a
             href="/CV_Aegner_Billik.pdf"
             target="_blank"
@@ -132,25 +192,30 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden border-t border-dark-border glass md:hidden"
+            className="overflow-hidden border-t border-dark-border bg-[#09090b]/95 backdrop-blur-2xl md:hidden"
           >
             <div className="flex flex-col gap-1 px-6 py-4">
-              {navLinks.map((link, i) => (
-                <motion.button
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  onClick={() => handleNavClick(link.href)}
-                  className={`rounded-lg px-4 py-3 text-left text-sm font-medium transition-colors cursor-pointer ${
-                    activeSection === link.href.slice(1)
-                      ? "bg-dark-hover text-foreground"
-                      : "text-muted hover:bg-dark-hover hover:text-foreground"
-                  }`}
-                >
-                  {link.label}
-                </motion.button>
-              ))}
+              {navLinks.map((link, i) => {
+                const linkKey = link.href.slice(1);
+                const isActive = activeSection === linkKey;
+
+                return (
+                  <motion.button
+                    key={link.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    onClick={() => handleNavClick(link.href)}
+                    className={`rounded-lg px-4 py-3 text-left text-sm font-medium transition-colors cursor-pointer ${
+                      isActive
+                        ? "bg-dark-hover text-foreground font-semibold"
+                        : "text-muted hover:bg-dark-hover hover:text-foreground"
+                    }`}
+                  >
+                    {link.label}
+                  </motion.button>
+                );
+              })}
               <a
                 href="/CV_Aegner_Billik.pdf"
                 target="_blank"
@@ -163,6 +228,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </header>
   );
 }

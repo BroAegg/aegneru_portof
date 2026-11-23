@@ -94,7 +94,7 @@ export default function Guestbook() {
   };
 
   return (
-    <section className="relative py-24 md:py-32">
+    <section id="guestbook" className="relative py-24 md:py-32 scroll-mt-20 md:scroll-mt-24">
       <div className="pointer-events-none absolute left-1/4 bottom-0 h-64 w-64 rounded-full bg-accent-blue/3 blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-6">
