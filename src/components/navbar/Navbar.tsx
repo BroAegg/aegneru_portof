@@ -44,14 +44,19 @@ export default function Navbar() {
     };
     window.addEventListener("portfolio-tab-active", handleTabActive);
 
-    // Initial check from URL hash
-    const initialHash = window.location.hash.replace("#", "");
-    if (["projects", "certificates", "techstack"].includes(initialHash)) {
-      setActiveShowcaseTab(initialHash);
-      setActiveSection(initialHash);
-    }
+    // Initial check from URL hash deferred to avoid synchronous setState inside effect
+    const frameId = requestAnimationFrame(() => {
+      const initialHash = window.location.hash.replace("#", "");
+      if (["projects", "certificates", "techstack"].includes(initialHash)) {
+        setActiveShowcaseTab(initialHash);
+        setActiveSection(initialHash);
+      }
+    });
 
-    return () => window.removeEventListener("portfolio-tab-active", handleTabActive);
+    return () => {
+      window.removeEventListener("portfolio-tab-active", handleTabActive);
+      cancelAnimationFrame(frameId);
+    };
   }, []);
 
   // Intersection Observer for active section on scroll

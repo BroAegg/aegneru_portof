@@ -9,6 +9,7 @@ interface MagneticButtonProps {
   onClick?: () => void;
   href?: string;
   variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md";
 }
 
 export default function MagneticButton({
@@ -17,6 +18,7 @@ export default function MagneticButton({
   onClick,
   href,
   variant = "primary",
+  size = "md",
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -42,6 +44,11 @@ export default function MagneticButton({
       "text-muted hover:text-foreground hover:bg-dark-hover",
   };
 
+  const sizeClasses: Record<string, string> = {
+    sm: "px-3.5 py-2 text-xs",
+    md: "px-6 py-3 text-sm",
+  };
+
   const Tag = href ? "a" : "button";
 
   return (
@@ -56,7 +63,7 @@ export default function MagneticButton({
       <Tag
         href={href}
         onClick={onClick}
-        className={`inline-flex items-center gap-2 rounded-xl px-6 py-3 font-heading font-semibold text-sm tracking-wide transition-all duration-300 cursor-pointer ${variantClasses[variant]} ${className}`}
+        className={`inline-flex items-center gap-2 rounded-xl font-heading font-semibold tracking-wide transition-all duration-300 cursor-pointer ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
       >
         {children}
       </Tag>

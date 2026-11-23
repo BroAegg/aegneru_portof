@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Instagram, Heart } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,10 +12,10 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <span className="font-heading text-lg font-bold gradient-text">
-              Aegner Billik
+              Aegner Billik, S.Kom.
             </span>
             <p className="mt-1 text-xs text-muted">
-              Software Engineer & Fullstack Developer
+              Fullstack & Backend Engineer &bull; Bandung, Indonesia
             </p>
           </div>
 

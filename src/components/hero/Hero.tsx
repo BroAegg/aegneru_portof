@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { motion, type Variants } from "framer-motion";
-import { ArrowUpRight, Mail, Sparkles, Github, Linkedin, FileText, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Mail, Github, Linkedin, FileText, MessageCircle } from "lucide-react";
 import dynamic from "next/dynamic";
 import MagneticButton from "@/components/ui/MagneticButton";
 
@@ -20,12 +20,11 @@ const Scene3D = dynamic(() => import("./Scene3D"), {
    Typewriter Effect
    ============================================ */
 const techStack = [
-  "Fullstack & Backend",
-  "Next.js 14 & React",
-  "Node.js & PostgreSQL",
-  "Double-Entry Ledger (GL)",
-  "Offline POS (IndexedDB)",
-  "FastAPI & Machine Learning",
+  "Next.js • Laravel • PostgreSQL",
+  "Offline-First POS Systems",
+  "Double-Entry Ledger Engines",
+  "Real-Time Factory IoT",
+  "Automated Document OCR",
 ];
 
 function TypewriterText() {
@@ -128,9 +127,9 @@ export default function Hero() {
         >
           {/* Badge */}
           <motion.div variants={itemVariants}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent shadow-xs">
-              <Sparkles className="h-3.5 w-3.5 text-accent animate-pulse" />
-              Fullstack & Backend Engineer &bull; Bandung (Onsite & Remote)
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-400 shadow-xs">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              Available immediately &bull; Bandung onsite / hybrid / remote
             </span>
           </motion.div>
 
@@ -157,23 +156,31 @@ export default function Hero() {
             variants={itemVariants}
             className="max-w-lg text-base leading-relaxed text-muted/90 sm:text-lg"
           >
-            Informatics Engineering graduate from Muhammadiyah University of Bandung (GPA 3.75/4.00, Graduated July 2026). Engineered autonomous cooperative ERPs (<strong className="text-foreground">0 downtime across 2+ months live</strong>), offline-first POS engines with IndexedDB, and high-performance academic portals.
+            Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75/4.00, thesis passed July 2026, graduating Jan 2027). Engineered autonomous cooperative ERPs (<strong className="text-foreground">0 downtime across 2+ months live</strong>), offline-first POS engines with IndexedDB, and high-performance academic portals.
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-2.5">
-            <MagneticButton href="#projects" variant="primary">
-              Featured Projects <ArrowUpRight className="h-4 w-4" />
-            </MagneticButton>
-            <MagneticButton href="/CV_Aegner_Billik.pdf" variant="secondary">
-              <FileText className="h-4 w-4" /> CV (PDF)
-            </MagneticButton>
-            <MagneticButton href="/Portofolio_Teknis_Aegner_Billik.pdf" variant="secondary">
-              <FileText className="h-4 w-4" /> Portfolio (PDF)
-            </MagneticButton>
-            <MagneticButton href="https://wa.me/62895416185355?text=Halo%20Aegner,%20kami%20tertarik%20dengan%20profil%20dan%20portofolio%20Anda" variant="secondary">
-              <MessageCircle className="h-4 w-4 text-emerald-400" /> WhatsApp
-            </MagneticButton>
+          <motion.div variants={itemVariants} className="flex flex-col gap-3">
+            <div>
+              <MagneticButton href="#showcase" variant="primary">
+                Featured Projects <ArrowUpRight className="h-4 w-4" />
+              </MagneticButton>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+              <MagneticButton href="/CV_Aegner_Billik.pdf" variant="secondary" size="sm">
+                <FileText className="h-3.5 w-3.5" /> CV (PDF)
+              </MagneticButton>
+              <MagneticButton href="/Portofolio_Teknis_Aegner_Billik.pdf" variant="secondary" size="sm">
+                <FileText className="h-3.5 w-3.5" /> Portfolio (PDF)
+              </MagneticButton>
+              <MagneticButton
+                href="https://wa.me/62895416185355?text=Halo%20Aegner,%20kami%20tertarik%20dengan%20profil%20dan%20portofolio%20Anda"
+                variant="secondary"
+                size="sm"
+              >
+                <MessageCircle className="h-3.5 w-3.5 text-emerald-400" /> WhatsApp
+              </MagneticButton>
+            </div>
           </motion.div>
 
           {/* Social Links */}

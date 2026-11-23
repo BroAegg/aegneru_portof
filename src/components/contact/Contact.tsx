@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, User, MessageSquare, MessageCircle, Linkedin, MapPin } from "lucide-react";
+import { Send, Mail, User, MessageSquare, MessageCircle, Linkedin, Github } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Toast, { useToast } from "@/components/ui/Toast";
 import { submitContact } from "@/lib/actions";
@@ -52,7 +52,7 @@ export default function Contact() {
         />
 
         {/* Direct Channels Cluster for HR & CTOs */}
-        <div className="mx-auto mb-12 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mx-auto mb-12 grid max-w-4xl grid-cols-2 gap-4 sm:grid-cols-4">
           <a
             href="https://wa.me/62895416185355?text=Halo%20Aegner,%20kami%20tertarik%20dengan%20profil%20dan%20portofolio%20Anda"
             target="_blank"
@@ -62,7 +62,7 @@ export default function Contact() {
             <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform">
               <MessageCircle className="h-5 w-5" />
             </div>
-            <span className="font-heading text-sm font-bold text-foreground">WhatsApp Direct</span>
+            <span className="font-heading text-sm font-bold text-foreground">WhatsApp</span>
             <span className="mt-0.5 text-xs text-muted">+62 895-4161-85355</span>
           </a>
 
@@ -74,7 +74,7 @@ export default function Contact() {
               <Mail className="h-5 w-5" />
             </div>
             <span className="font-heading text-sm font-bold text-foreground">Email</span>
-            <span className="mt-0.5 text-xs text-muted">aegneru@gmail.com</span>
+            <span className="mt-0.5 text-xs text-muted truncate max-w-[140px]">aegneru@gmail.com</span>
           </a>
 
           <a
@@ -88,6 +88,19 @@ export default function Contact() {
             </div>
             <span className="font-heading text-sm font-bold text-foreground">LinkedIn</span>
             <span className="mt-0.5 text-xs text-muted">in/aegnerbillik</span>
+          </a>
+
+          <a
+            href="https://github.com/BroAegg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col items-center justify-center rounded-2xl border border-dark-border bg-dark-card p-5 text-center transition-all duration-300 hover:border-accent/50 hover:bg-accent/5 hover:shadow-xl hover:shadow-accent/5"
+          >
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-dark/80 text-foreground group-hover:scale-110 transition-transform border border-dark-border/60">
+              <Github className="h-5 w-5" />
+            </div>
+            <span className="font-heading text-sm font-bold text-foreground">GitHub</span>
+            <span className="mt-0.5 text-xs text-muted">BroAegg</span>
           </a>
         </div>
 

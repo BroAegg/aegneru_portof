@@ -13,10 +13,13 @@ export interface ProjectItem {
   liveUrl?: string;
   image?: string;
   visualType?: "browser" | "iot" | "audio" | "finance";
+  badge?: string;
+  caseStudyUrl?: string;
 }
 
 interface ProjectCardProps extends ProjectItem {
   index: number;
+  featured?: boolean;
 }
 
 export default function ProjectCard({
@@ -27,7 +30,10 @@ export default function ProjectCard({
   liveUrl,
   image,
   visualType = "browser",
+  badge,
+  caseStudyUrl,
   index,
+  featured = false,
 }: ProjectCardProps) {
   return (
     <motion.div
@@ -35,12 +41,11 @@ export default function ProjectCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.45, delay: index * 0.08, ease: [0, 0, 0.2, 1] }}
-      className="flex h-full"
+      className="flex h-full w-full"
     >
-      <GlowCard className="group flex h-full w-full flex-col justify-between overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-2xl hover:shadow-accent/5">
-        <div>
-          {/* 1. Visual Header (Fixed uniform height h-48 across ALL cards) */}
-          <div className="relative h-48 w-full overflow-hidden border-b border-dark-border/70 bg-dark/90">
+      <GlowCard className={`group flex h-full w-full overflow-hidden transition-all duration-300 hover:border-accent/40 hover:shadow-2xl hover:shadow-accent/5 ${featured ? "flex-col md:flex-row" : "flex-col justify-between"}`}>
+        {/* 1. Visual Header */}
+        <div className={`relative overflow-hidden border-dark-border/70 bg-dark/90 ${featured ? "w-full md:w-1/2 lg:w-3/5 min-h-[260px] border-b md:border-b-0 md:border-r" : "h-48 w-full border-b"}`}>
             {image ? (
               // Browser Frame Mockup with Screenshot
               <div className="flex h-full w-full flex-col">
@@ -164,15 +169,32 @@ export default function ProjectCard({
           </div>
 
           {/* 2. Card Content Area */}
-          <div className="p-5 sm:p-6 flex flex-col justify-between">
+          <div className={`flex flex-col justify-between flex-1 ${featured ? "p-6 sm:p-8" : "p-5 sm:p-6"}`}>
             <div>
               {/* Header: Index + Action Links */}
-              <div className="mb-3 flex items-center justify-between">
-                <span className="font-heading text-xs font-bold text-accent">
-                  PROJECT {String(index + 1).padStart(2, "0")}
-                </span>
+              <div className="mb-3 flex items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-heading text-xs font-bold text-accent">
+                    PROJECT {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {badge && (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-400">
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+                      {badge}
+                    </span>
+                  )}
+                </div>
 
                 <div className="flex items-center gap-2">
+                  {caseStudyUrl && (
+                    <a
+                      href={caseStudyUrl}
+                      className="inline-flex items-center gap-1 rounded-lg border border-accent/40 bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent transition-all duration-300 hover:bg-accent hover:text-white cursor-pointer"
+                      title="Read Engineering Case Study"
+                    >
+                      Case Study →
+                    </a>
+                  )}
                   {liveUrl && (
                     <a
                       href={liveUrl}
@@ -216,7 +238,7 @@ export default function ProjectCard({
               </h3>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm leading-relaxed text-muted line-clamp-3">
+              <p className="text-xs sm:text-sm leading-relaxed text-muted line-clamp-4">
                 {description}
               </p>
             </div>
@@ -233,7 +255,6 @@ export default function ProjectCard({
               ))}
             </div>
           </div>
-        </div>
       </GlowCard>
     </motion.div>
   );

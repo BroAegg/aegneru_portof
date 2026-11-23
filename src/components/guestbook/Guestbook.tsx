@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, Send, Clock } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -37,22 +37,28 @@ export default function Guestbook() {
   const { toasts, addToast, removeToast } = useToast();
 
   /* ---- Fetch initial comments ---- */
-  const fetchComments = useCallback(async () => {
-    const { data, error } = await supabase
-      .from("comments")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(50);
-
-    if (!error && data) {
-      setComments(data);
-    }
-    setIsLoading(false);
-  }, []);
-
   useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
+    let ignore = false;
+    async function loadComments() {
+      const { data, error } = await supabase
+        .from("comments")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      if (!ignore) {
+        if (!error && data) {
+          setComments(data);
+        }
+        setIsLoading(false);
+      }
+    }
+
+    loadComments();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   /* ---- Realtime subscription ---- */
   useEffect(() => {

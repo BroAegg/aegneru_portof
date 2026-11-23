@@ -7,7 +7,7 @@ import { Award, ExternalLink, X, ZoomIn, CheckCircle2 } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import GlowCard from "@/components/ui/GlowCard";
 
-interface Certificate {
+export interface Certificate {
   id: number;
   title: string;
   issuer: string;
@@ -15,9 +15,10 @@ interface Certificate {
   date: string;
   image: string;
   verified?: boolean;
+  verifyUrl?: string;
 }
 
-const certificateList: Certificate[] = [
+export const certificateList: Certificate[] = [
   {
     id: 1,
     title: "Bangkit Academy Machine Learning Cohort Graduate",
@@ -335,10 +336,23 @@ export default function Certificates({ standalone = true }: { standalone?: boole
                     {/* Certificate Information */}
                     <div>
                       <div className="mb-2 flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
-                          <CheckCircle2 className="h-3 w-3" />
-                          Verified Credential
-                        </span>
+                        {cert.verifyUrl ? (
+                          <a
+                            href={cert.verifyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 hover:underline"
+                          >
+                            <CheckCircle2 className="h-3 w-3" />
+                            Verify ↗
+                          </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-muted/80">
+                            <Award className="h-3 w-3 text-accent" />
+                            Certificate
+                          </span>
+                        )}
                         <span className="text-xs text-muted/80">{cert.date}</span>
                       </div>
 
@@ -411,19 +425,31 @@ export default function Certificates({ standalone = true }: { standalone?: boole
               </div>
 
               {/* Modal Footer */}
-              <div className="mt-4 flex items-center justify-between text-xs text-muted">
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
                 <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
                   <CheckCircle2 className="h-4 w-4" />
-                  Authenticated Physical / Digital Record
+                  Authenticated Record
                 </span>
-                <a
-                  href={selectedCert.image}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-accent hover:underline font-semibold"
-                >
-                  Open Original Image <ExternalLink className="h-3 w-3" />
-                </a>
+                <div className="flex items-center gap-4">
+                  {selectedCert.verifyUrl && (
+                    <a
+                      href={selectedCert.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-emerald-400 hover:underline font-semibold"
+                    >
+                      Verify Credential <ExternalLink className="h-3 w-3" />
+                    </a>
+                  )}
+                  <a
+                    href={selectedCert.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-accent hover:underline font-semibold"
+                  >
+                    Open Original Image <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
               </div>
             </motion.div>
           </motion.div>

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { projects } from "@/components/projects/Projects";
+import { certificateList } from "@/components/certificates/Certificates";
 
 export default function About() {
   return (
@@ -57,7 +59,7 @@ export default function About() {
           >
             <div className="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
               <p>
-                I&apos;m an Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75/4.00, graduated July 2026), based in Bandung, Indonesia. Available immediately for Fullstack, Backend, and Software Engineer positions (both onsite and remote).
+                I&apos;m <strong className="text-foreground">Aegner Billik, S.Kom.</strong>, an Informatics Engineering graduate from Universitas Muhammadiyah Bandung (GPA 3.75/4.00, thesis passed July 2026, graduating January 2027), based in Bandung, Indonesia. Available immediately for Fullstack, Backend, and Software Engineer positions (both onsite and remote).
               </p>
               <p>
                 My production experience includes building{" "}
@@ -74,7 +76,7 @@ export default function About() {
                 </span>.
               </p>
               <p>
-                As a graduate of Google Bangkit Academy 2024 (Machine Learning Path) and recipient of the National P2MW Innovation Grant, I combine solid computer science fundamentals with modern software engineering practices, ACID-compliant database architectures, and pragmatic AI-assisted workflows.
+                As a graduate of Google Bangkit Academy 2024 (Machine Learning Path) and recipient of the National P2MW Innovation Grant, I combine solid computer science fundamentals with modern software engineering practices, ACID-compliant database architectures, and pragmatic engineering workflows.
               </p>
             </div>
 
@@ -82,8 +84,8 @@ export default function About() {
             <div className="mt-8 grid grid-cols-3 gap-4">
               {[
                 { label: "GPA / IPK (UMB)", value: "3.75" },
-                { label: "Projects Built", value: "10+" },
-                { label: "Verified Credentials", value: "25+" },
+                { label: "Projects Showcased", value: `${projects.length}` },
+                { label: "Credentials", value: `${certificateList.length}` },
               ].map((stat, i) => (
                 <motion.div
                   key={stat.label}
