@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Award, ExternalLink, X, ZoomIn, CheckCircle2 } from "lucide-react";
@@ -257,6 +257,18 @@ export default function Certificates({ standalone = true }: { standalone?: boole
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedCert(null);
+      }
+    };
+    if (selectedCert) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedCert]);
+
   const filtered = activeCategory === "all"
     ? certificateList
     : certificateList.filter((c) => c.category === activeCategory);
@@ -383,6 +395,9 @@ export default function Certificates({ standalone = true }: { standalone?: boole
             onClick={() => setSelectedCert(null)}
           >
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="cert-modal-title"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -395,7 +410,7 @@ export default function Certificates({ standalone = true }: { standalone?: boole
                 <div>
                   <div className="flex items-center gap-2">
                     <Award className="h-5 w-5 text-accent" />
-                    <h3 className="font-heading text-lg font-bold text-foreground sm:text-xl">
+                    <h3 id="cert-modal-title" className="font-heading text-lg font-bold text-foreground sm:text-xl">
                       {selectedCert.title}
                     </h3>
                   </div>
@@ -406,8 +421,8 @@ export default function Certificates({ standalone = true }: { standalone?: boole
 
                 <button
                   onClick={() => setSelectedCert(null)}
-                  className="rounded-lg border border-dark-border bg-dark/60 p-2 text-muted transition-colors hover:bg-dark-hover hover:text-foreground cursor-pointer"
-                  aria-label="Close modal"
+                  className="rounded-lg border border-dark-border bg-dark/60 p-2 text-muted transition-colors hover:bg-dark-hover hover:text-foreground cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                  aria-label="Tutup pratinjau sertifikat"
                 >
                   <X className="h-5 w-5" />
                 </button>

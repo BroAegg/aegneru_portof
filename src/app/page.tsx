@@ -20,7 +20,7 @@ export default function Home() {
     <SmoothScroll>
       <Navbar />
 
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <Hero />
 
         <div className="section-divider mx-auto max-w-7xl" />

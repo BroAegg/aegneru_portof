@@ -17,7 +17,11 @@ interface ToastProps {
 
 export default function Toast({ toasts, onRemove }: ToastProps) {
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-3">
+    <div
+      role="status"
+      aria-live="polite"
+      className="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"
+    >
       <AnimatePresence>
         {toasts.map((toast) => (
           <ToastItem key={toast.id} toast={toast} onRemove={onRemove} />
@@ -66,12 +70,13 @@ function ToastItem({
       }}
       exit={{ opacity: 0, x: 50, scale: 0.95 }}
       transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
-      className={`flex items-center gap-3 rounded-xl border ${borderColor} bg-dark-card/95 px-4 py-3 shadow-2xl backdrop-blur-sm min-w-[300px]`}
+      className={`pointer-events-auto flex items-center gap-3 rounded-xl border ${borderColor} bg-dark-card/95 px-4 py-3 shadow-2xl backdrop-blur-sm min-w-[300px]`}
     >
       {icon}
       <p className="flex-1 text-sm text-foreground">{toast.message}</p>
       <button
         onClick={() => onRemove(toast.id)}
+        aria-label="Tutup notifikasi"
         className="text-muted hover:text-foreground transition-colors cursor-pointer"
       >
         <X className="h-4 w-4" />
