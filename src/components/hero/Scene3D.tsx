@@ -1,23 +1,31 @@
 "use client";
 
-import React, { useRef, useMemo, Suspense, useState } from "react";
+import React, { useRef, useMemo, Suspense, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useTexture, Environment } from "@react-three/drei";
 import * as THREE from "three";
 
-/* ============================================
-   Realistic Moon Sphere with texture
-   ============================================ */
 const RADIUS = 2.0;
+const MAX_ASTEROIDS = 25;
+const MOON_TEXTURE_PATH = "/textures/moon_1024.jpg";
 
-const RealisticMoon = ({ onClick }: { onClick?: () => void }) => {
+/* ============================================
+   Realistic Moon Sphere with Local Texture
+   ============================================ */
+const RealisticMoon = ({
+  onClick,
+  prefersReducedMotion,
+}: {
+  onClick?: () => void;
+  prefersReducedMotion: boolean;
+}) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const colorMap = useTexture(
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg"
-  );
+  const colorMap = useTexture(MOON_TEXTURE_PATH);
 
   useFrame((_, delta) => {
-    if (meshRef.current) meshRef.current.rotation.y += delta * 0.05;
+    if (meshRef.current && !prefersReducedMotion) {
+      meshRef.current.rotation.y += delta * 0.05;
+    }
   });
 
   return (
@@ -42,15 +50,14 @@ const RealisticMoon = ({ onClick }: { onClick?: () => void }) => {
 };
 
 /* ============================================
-   60k Particle Ring (pre-computed positions)
+   Particle Ring Generator (Adaptive Desktop / Mobile)
    ============================================ */
-const particlesCount = 60000;
-const [ringPositions, ringColors, ringRandoms] = (() => {
-  const pos = new Float32Array(particlesCount * 3);
-  const col = new Float32Array(particlesCount * 3);
-  const rnd = new Float32Array(particlesCount);
+function generateRingData(count: number) {
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  const rnd = new Float32Array(count);
 
-  for (let i = 0; i < particlesCount; i++) {
+  for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
     const rDist = Math.pow(Math.random(), 1.5);
     const radius = 2.2 + rDist * 2.2;
@@ -67,11 +74,17 @@ const [ringPositions, ringColors, ringRandoms] = (() => {
     let baseR: number, baseG: number, baseB: number;
 
     if (paletteType < 0.8) {
-      baseR = 0.25; baseG = 0.3; baseB = 0.35;
+      baseR = 0.25;
+      baseG = 0.3;
+      baseB = 0.35;
     } else if (paletteType < 0.92) {
-      baseR = 0.0; baseG = 0.6; baseB = 0.8;
+      baseR = 0.0;
+      baseG = 0.6;
+      baseB = 0.8;
     } else {
-      baseR = 0.6; baseG = 0.2; baseB = 0.8;
+      baseR = 0.6;
+      baseG = 0.2;
+      baseB = 0.8;
     }
 
     baseR = Math.min(1, Math.max(0, baseR + (Math.random() - 0.5) * 0.1));
@@ -84,8 +97,11 @@ const [ringPositions, ringColors, ringRandoms] = (() => {
     col[i * 3 + 2] = baseB * intensity * sparkle;
     rnd[i] = Math.random();
   }
-  return [pos, col, rnd];
-})();
+  return { pos, col, rnd };
+}
+
+const desktopRingData = generateRingData(60000);
+const mobileRingData = generateRingData(14000);
 
 /* ============================================
    Particle Ring with GLSL shader animation
@@ -93,25 +109,33 @@ const [ringPositions, ringColors, ringRandoms] = (() => {
 const ParticleRing = ({
   ringState,
   massiveAsteroidsRef,
+  isMobile,
+  prefersReducedMotion,
 }: {
   ringState: "hidden" | "animating" | "visible";
   massiveAsteroidsRef: React.MutableRefObject<Float32Array>;
+  isMobile: boolean;
+  prefersReducedMotion: boolean;
 }) => {
   const pointsRef = useRef<THREE.Points>(null);
+  const ringData = isMobile ? mobileRingData : desktopRingData;
+
   const uniforms = useRef({
     uProgress: { value: ringState === "visible" ? 1.0 : 0.0 },
-    uAsteroids: { value: new Float32Array(75 * 4) },
+    uAsteroids: { value: new Float32Array(MAX_ASTEROIDS * 4) },
     time: { value: 0 },
   });
 
   useFrame((state, delta) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y -= delta * 0.02;
+      if (!prefersReducedMotion) {
+        pointsRef.current.rotation.y -= delta * 0.02;
+      }
       pointsRef.current.updateMatrix();
 
       const invMat = new THREE.Matrix4().copy(pointsRef.current.matrix).invert();
-      const localAsteroids = new Float32Array(75 * 4);
-      for (let i = 0; i < 75; i++) {
+      const localAsteroids = new Float32Array(MAX_ASTEROIDS * 4);
+      for (let i = 0; i < MAX_ASTEROIDS; i++) {
         const ast = new THREE.Vector3(
           massiveAsteroidsRef.current[i * 4],
           massiveAsteroidsRef.current[i * 4 + 1],
@@ -146,7 +170,7 @@ const ParticleRing = ({
 
     shader.vertexShader = `
       uniform float uProgress;
-      uniform vec4 uAsteroids[75];
+      uniform vec4 uAsteroids[${MAX_ASTEROIDS}];
       uniform float time;
       attribute float aRandom;
       varying float vProgress;
@@ -165,7 +189,7 @@ const ParticleRing = ({
       vProgress = particleProgress;
       transformed.y += sin(angle * 10.0 + time) * 0.05 * aRandom;
       if (uProgress > 0.5) {
-        for(int i = 0; i < 75; i++) {
+        for(int i = 0; i < ${MAX_ASTEROIDS}; i++) {
           vec4 astData = uAsteroids[i];
           vec3 delta = transformed - astData.xyz;
           float dist = length(delta);
@@ -203,35 +227,25 @@ const ParticleRing = ({
 
   return (
     <points ref={pointsRef} rotation={[-Math.PI / 2, 0, 0]}>
-      <bufferGeometry>
+      <bufferGeometry key={isMobile ? "mobile" : "desktop"}>
         <bufferAttribute
           attach="attributes-position"
-          count={particlesCount}
-          array={ringPositions}
-          itemSize={3}
-          args={[ringPositions, 3]}
+          args={[ringData.pos, 3]}
         />
         <bufferAttribute
           attach="attributes-color"
-          count={particlesCount}
-          array={ringColors}
-          itemSize={3}
-          args={[ringColors, 3]}
+          args={[ringData.col, 3]}
         />
         <bufferAttribute
           attach="attributes-aRandom"
-          count={particlesCount}
-          array={ringRandoms}
-          itemSize={1}
-          args={[ringRandoms, 1]}
+          args={[ringData.rnd, 1]}
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.008}
+        size={0.035}
         vertexColors
         transparent
-        opacity={0.8}
-        sizeAttenuation={true}
+        opacity={1.0}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         onBeforeCompile={onBeforeCompile}
@@ -241,7 +255,7 @@ const ParticleRing = ({
 };
 
 /* ============================================
-   Asteroid Belt (75 instanced dodecahedrons)
+   Asteroid Belt (Adaptive Count: 24 desktop, 8 mobile)
    ============================================ */
 const generateAsteroids = (count: number) => {
   const data = [];
@@ -257,7 +271,13 @@ const generateAsteroids = (count: number) => {
     const scale = 0.02 + Math.pow(Math.random(), 4) * 0.18;
 
     data.push({
-      angle, baseRadius, radialAmplitude, radialSpeed, phase, zOffset, speed,
+      angle,
+      baseRadius,
+      radialAmplitude,
+      radialSpeed,
+      phase,
+      zOffset,
+      speed,
       rx: Math.random() * Math.PI,
       ry: Math.random() * Math.PI,
       rz: Math.random() * Math.PI,
@@ -274,16 +294,17 @@ const generateAsteroids = (count: number) => {
 const AsteroidBelt = ({
   ringState,
   massiveAsteroidsRef,
+  isMobile,
+  prefersReducedMotion,
 }: {
   ringState: "hidden" | "animating" | "visible";
   massiveAsteroidsRef: React.MutableRefObject<Float32Array>;
+  isMobile: boolean;
+  prefersReducedMotion: boolean;
 }) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const [colorMap, bumpMap] = useTexture([
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg",
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg",
-  ]);
-  const count = 75;
+  const colorMap = useTexture(MOON_TEXTURE_PATH);
+  const count = isMobile ? 8 : 24;
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const [asteroids] = useState(() => generateAsteroids(count));
   const scaleRef = useRef(0);
@@ -305,8 +326,10 @@ const AsteroidBelt = ({
     meshRef.current.visible = true;
 
     asteroids.forEach((ast, i) => {
-      ast.angle += ast.speed * delta;
-      ast.phase += ast.radialSpeed * delta;
+      if (!prefersReducedMotion) {
+        ast.angle += ast.speed * delta;
+        ast.phase += ast.radialSpeed * delta;
+      }
       let currentRadius =
         ast.baseRadius + Math.sin(ast.phase) * ast.radialAmplitude;
       if (currentRadius < 2.15) {
@@ -321,9 +344,11 @@ const AsteroidBelt = ({
       massiveAsteroidsRef.current[i * 4 + 2] = ast.zOffset;
       massiveAsteroidsRef.current[i * 4 + 3] = ast.scale;
 
-      ast.rx += ast.rsx;
-      ast.ry += ast.rsy;
-      ast.rz += ast.rsz;
+      if (!prefersReducedMotion) {
+        ast.rx += ast.rsx;
+        ast.ry += ast.rsy;
+        ast.rz += ast.rsz;
+      }
       dummy.position.set(x, y, ast.zOffset);
       dummy.rotation.set(ast.rx, ast.ry, ast.rz);
       dummy.scale.setScalar(ast.scale * scaleRef.current);
@@ -343,7 +368,7 @@ const AsteroidBelt = ({
       <dodecahedronGeometry args={[1, 0]} />
       <meshStandardMaterial
         map={colorMap}
-        bumpMap={bumpMap}
+        bumpMap={colorMap}
         bumpScale={0.08}
         color="#ffffff"
         roughness={0.7}
@@ -354,21 +379,84 @@ const AsteroidBelt = ({
 };
 
 /* ============================================
-   Main Scene3D Export — Lunar Gravity
+   Main Scene3D Export — Lunar Gravity (Adaptive)
    ============================================ */
 export default function Scene3D() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [ringState, setRingState] = useState<
     "hidden" | "animating" | "visible"
   >("hidden");
-  const massiveAsteroidsRef = useRef<Float32Array>(new Float32Array(75 * 4));
+  const massiveAsteroidsRef = useRef<Float32Array>(new Float32Array(MAX_ASTEROIDS * 4));
+
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false
+  );
+  const [isInView, setIsInView] = useState(true);
+  const [hasWebGLError, setHasWebGLError] = useState(false);
+
+  useEffect(() => {
+    // 1. Resize listener for mobile breakpoint
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", checkMobile);
+
+    // 2. Listener for prefers-reduced-motion
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    motionQuery.addEventListener("change", handleMotionChange);
+
+    // 3. Viewport Intersection Observer (pause rendering when scrolled out)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      motionQuery.removeEventListener("change", handleMotionChange);
+      observer.disconnect();
+    };
+  }, []);
+
+  // Graceful Fallback if WebGL crashes or is unsupported
+  if (hasWebGLError) {
+    return (
+      <div className="relative flex h-full w-full items-center justify-center">
+        <div className="absolute h-64 w-64 rounded-full bg-gradient-to-tr from-accent/20 to-accent-blue/30 blur-2xl" />
+        <div className="relative h-56 w-56 rounded-full border border-white/10 shadow-2xl bg-gradient-to-br from-zinc-700 via-zinc-900 to-black overflow-hidden flex items-center justify-center">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.15),transparent_60%)]" />
+          <div className="h-44 w-44 rounded-full border border-white/5 opacity-80" />
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="h-full w-full">
+    <div ref={containerRef} className="h-full w-full">
       <Canvas
         shadows
         camera={{ position: [0, 4, 10], fov: 45 }}
-        dpr={[1, 2]}
+        dpr={typeof window !== "undefined" && window.devicePixelRatio > 1.5 ? 1.5 : 1}
+        gl={{ powerPreference: "low-power", antialias: true, alpha: true }}
+        frameloop={!isInView ? "never" : prefersReducedMotion ? "demand" : "always"}
         style={{ background: "transparent" }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener("webglcontextlost", (event) => {
+            event.preventDefault();
+            setHasWebGLError(true);
+          });
+        }}
       >
         <Environment preset="city" />
 
@@ -378,7 +466,7 @@ export default function Scene3D() {
           intensity={1.5}
           color="#ffffff"
           castShadow
-          shadow-mapSize={[2048, 2048]}
+          shadow-mapSize={[1024, 1024]}
         />
         <directionalLight
           position={[-5, -3, -5]}
@@ -398,14 +486,19 @@ export default function Scene3D() {
               onClick={() => {
                 if (ringState === "hidden") setRingState("animating");
               }}
+              prefersReducedMotion={prefersReducedMotion}
             />
             <ParticleRing
               ringState={ringState}
               massiveAsteroidsRef={massiveAsteroidsRef}
+              isMobile={isMobile}
+              prefersReducedMotion={prefersReducedMotion}
             />
             <AsteroidBelt
               ringState={ringState}
               massiveAsteroidsRef={massiveAsteroidsRef}
+              isMobile={isMobile}
+              prefersReducedMotion={prefersReducedMotion}
             />
           </Suspense>
         </group>
