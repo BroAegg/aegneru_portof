@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, Send, Clock } from "lucide-react";
+import { MessageCircle, Send, Clock, ShieldCheck, WifiOff } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Toast, { useToast } from "@/components/ui/Toast";
-import { supabase, type Comment } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured, type Comment } from "@/lib/supabase";
 import { submitComment } from "@/lib/actions";
 
 /* ============================================
@@ -32,25 +32,41 @@ function timeAgo(dateString: string): string {
 export default function Guestbook() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [formData, setFormData] = useState({ guest_name: "", comment_text: "" });
+  const [honeypot, setHoneypot] = useState("");
+  const mountTimestampRef = useRef<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => isSupabaseConfigured);
   const { toasts, addToast, removeToast } = useToast();
 
-  /* ---- Fetch initial comments ---- */
   useEffect(() => {
+    mountTimestampRef.current = Date.now();
+  }, []);
+
+  /* ---- Fetch approved comments only ---- */
+  useEffect(() => {
+    if (!isSupabaseConfigured) {
+      return;
+    }
+
     let ignore = false;
     async function loadComments() {
-      const { data, error } = await supabase
-        .from("comments")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(50);
+      try {
+        const { data, error } = await supabase
+          .from("comments")
+          .select("*")
+          .eq("approved", true)
+          .order("created_at", { ascending: false })
+          .limit(50);
 
-      if (!ignore) {
-        if (!error && data) {
-          setComments(data);
+        if (!ignore) {
+          if (!error && data) {
+            setComments(data);
+          }
+          setIsLoading(false);
         }
-        setIsLoading(false);
+      } catch (err) {
+        console.error("[Guestbook Fetch Error]:", err);
+        if (!ignore) setIsLoading(false);
       }
     }
 
@@ -60,16 +76,45 @@ export default function Guestbook() {
     };
   }, []);
 
-  /* ---- Realtime subscription ---- */
+  /* ---- Realtime subscription for approved comments & approval updates ---- */
   useEffect(() => {
+    if (!isSupabaseConfigured) return;
+
     const channel = supabase
-      .channel("guestbook-realtime")
+      .channel("guestbook-realtime-moderated")
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "comments" },
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "comments",
+          filter: "approved=eq.true",
+        },
         (payload) => {
           const newComment = payload.new as Comment;
-          setComments((prev) => [newComment, ...prev]);
+          setComments((prev) => [newComment, ...prev.filter((c) => c.id !== newComment.id)]);
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "comments",
+        },
+        (payload) => {
+          const updated = payload.new as Comment;
+          if (updated.approved) {
+            setComments((prev) => {
+              const exists = prev.some((c) => c.id === updated.id);
+              if (exists) {
+                return prev.map((c) => (c.id === updated.id ? updated : c));
+              }
+              return [updated, ...prev];
+            });
+          } else {
+            setComments((prev) => prev.filter((c) => c.id !== updated.id));
+          }
         }
       )
       .subscribe();
@@ -79,21 +124,30 @@ export default function Guestbook() {
     };
   }, []);
 
-  /* ---- Submit comment ---- */
+  /* ---- Submit comment with security tokens ---- */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const result = await submitComment(formData);
+      const result = await submitComment({
+        guest_name: formData.guest_name,
+        comment_text: formData.comment_text,
+        honeypot,
+        timestampToken: mountTimestampRef.current || undefined,
+      });
+
       if (result.success) {
-        addToast("success", "Comment posted! 🎉");
+        addToast(
+          "success",
+          result.message || "Terima kasih! Pesan akan tampil setelah dimoderasi."
+        );
         setFormData({ guest_name: "", comment_text: "" });
       } else {
-        addToast("error", result.error || "Failed to post comment.");
+        addToast("error", result.error || "Gagal memposting komentar.");
       }
     } catch {
-      addToast("error", "Something went wrong. Please try again.");
+      addToast("error", "Terjadi kesalahan koneksi. Silakan coba lagi.");
     } finally {
       setIsSubmitting(false);
     }
@@ -106,10 +160,20 @@ export default function Guestbook() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           title="Guestbook"
-          subtitle="Leave a message — it appears in real-time for everyone."
+          subtitle="Leave a message — comments are reviewed for a professional, spam-free environment."
         />
 
         <div className="mx-auto max-w-2xl">
+          {/* Offline Notice if Supabase is unconfigured */}
+          {!isSupabaseConfigured && (
+            <div className="mb-6 flex items-center gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-xs text-amber-300">
+              <WifiOff className="h-4 w-4 shrink-0 text-amber-400" />
+              <span>
+                Guestbook sedang berjalan dalam mode offline (Database belum dikonfigurasi).
+              </span>
+            </div>
+          )}
+
           {/* Comment Form */}
           <motion.form
             initial={{ opacity: 0, y: 20 }}
@@ -119,49 +183,79 @@ export default function Guestbook() {
             onSubmit={handleSubmit}
             className="mb-10 space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6"
           >
+            {/* Honeypot field (hidden from real users, traps bots) */}
             <input
               type="text"
-              name="guest_name"
-              value={formData.guest_name}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, guest_name: e.target.value }))
-              }
-              placeholder="Your name"
-              required
-              className="w-full rounded-xl border border-dark-border bg-dark py-2.5 px-4 text-sm text-foreground placeholder:text-muted/40 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-all"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              className="hidden"
+              aria-hidden="true"
             />
 
-            <div className="flex gap-3">
+            <div>
+              <label htmlFor="guest_name" className="sr-only">
+                Nama Anda
+              </label>
               <input
+                id="guest_name"
                 type="text"
-                name="comment_text"
-                value={formData.comment_text}
+                name="guest_name"
+                value={formData.guest_name}
                 onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    comment_text: e.target.value,
-                  }))
+                  setFormData((prev) => ({ ...prev, guest_name: e.target.value }))
                 }
-                placeholder="Leave a message..."
+                placeholder="Nama Anda (maks. 50 karakter)"
+                maxLength={50}
                 required
-                maxLength={500}
-                className="flex-1 rounded-xl border border-dark-border bg-dark py-2.5 px-4 text-sm text-foreground placeholder:text-muted/40 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-all"
+                className="w-full rounded-xl border border-dark-border bg-dark py-2.5 px-4 text-sm text-foreground placeholder:text-muted/40 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-all"
               />
-
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 hover:bg-accent/90 disabled:opacity-50 transition-all cursor-pointer"
-              >
-                <Send className="h-4 w-4" />
-              </motion.button>
             </div>
 
-            <p className="text-xs text-muted/50">
-              {formData.comment_text.length}/500 characters
-            </p>
+            <div>
+              <label htmlFor="comment_text" className="sr-only">
+                Pesan Komentar
+              </label>
+              <div className="flex gap-3">
+                <input
+                  id="comment_text"
+                  type="text"
+                  name="comment_text"
+                  value={formData.comment_text}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      comment_text: e.target.value,
+                    }))
+                  }
+                  placeholder="Tulis pesan atau komentar..."
+                  required
+                  maxLength={500}
+                  className="flex-1 rounded-xl border border-dark-border bg-dark py-2.5 px-4 text-sm text-foreground placeholder:text-muted/40 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-all"
+                />
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 hover:bg-accent/90 disabled:opacity-50 transition-all cursor-pointer"
+                  aria-label="Kirim Komentar"
+                >
+                  <Send className="h-4 w-4" />
+                </motion.button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-xs text-muted/60">
+              <span className="flex items-center gap-1 text-[11px] text-muted/70">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                Dimoderasi manual sebelum tayang publik
+              </span>
+              <span>{formData.comment_text.length}/500</span>
+            </div>
           </motion.form>
 
           {/* Comments List */}
@@ -181,7 +275,7 @@ export default function Guestbook() {
               >
                 <MessageCircle className="mx-auto mb-3 h-8 w-8 text-muted/30" />
                 <p className="text-sm text-muted/50">
-                  No messages yet. Be the first to leave one!
+                  Belum ada pesan yang disetujui. Jadilah yang pertama meninggalkan pesan!
                 </p>
               </motion.div>
             ) : (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, User, MessageSquare, MessageCircle, Linkedin, Github } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -13,23 +13,35 @@ export default function Contact() {
     email: "",
     message: "",
   });
+  const [honeypot, setHoneypot] = useState("");
+  const mountTimestampRef = useRef<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
+
+  useEffect(() => {
+    mountTimestampRef.current = Date.now();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const result = await submitContact(formData);
+      const result = await submitContact({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        honeypot,
+        timestampToken: mountTimestampRef.current || undefined,
+      });
       if (result.success) {
-        addToast("success", "Message sent successfully! I'll get back to you soon.");
+        addToast("success", "Pesan berhasil terkirim! Saya akan segera merespons email Anda.");
         setFormData({ name: "", email: "", message: "" });
       } else {
-        addToast("error", result.error || "Something went wrong.");
+        addToast("error", result.error || "Gagal mengirim pesan.");
       }
     } catch {
-      addToast("error", "Failed to send message. Please try again.");
+      addToast("error", "Terjadi kesalahan koneksi. Silakan coba lagi.");
     } finally {
       setIsSubmitting(false);
     }
@@ -112,6 +124,18 @@ export default function Contact() {
           className="mx-auto max-w-2xl"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Honeypot field (hidden from real users, traps bots) */}
+            <input
+              type="text"
+              name="company_url"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              className="hidden"
+              aria-hidden="true"
+            />
+
             {/* Name Field */}
             <div className="group relative">
               <label
@@ -127,6 +151,7 @@ export default function Contact() {
                   name="name"
                   type="text"
                   required
+                  maxLength={50}
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your name"
@@ -160,12 +185,17 @@ export default function Contact() {
 
             {/* Message Field */}
             <div className="group relative">
-              <label
-                htmlFor="contact-message"
-                className="mb-2 block text-sm font-medium text-muted"
-              >
-                Message
-              </label>
+              <div className="mb-2 flex items-center justify-between">
+                <label
+                  htmlFor="contact-message"
+                  className="block text-sm font-medium text-muted"
+                >
+                  Message
+                </label>
+                <span className="text-xs text-muted/50">
+                  {formData.message.length}/500
+                </span>
+              </div>
               <div className="relative">
                 <MessageSquare className="absolute left-4 top-4 h-4 w-4 text-muted/50 transition-colors group-focus-within:text-accent" />
                 <textarea
@@ -173,9 +203,10 @@ export default function Contact() {
                   name="message"
                   required
                   rows={5}
+                  maxLength={500}
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Tell me about your project..."
+                  placeholder="Tell me about your project, contract, or open position..."
                   className="w-full resize-none rounded-xl border border-dark-border bg-dark-card py-3 pl-11 pr-4 text-sm text-foreground placeholder:text-muted/40 transition-all duration-300 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/20"
                 />
               </div>

@@ -3,14 +3,20 @@ import { createClient } from "@supabase/supabase-js";
 const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-const supabaseUrl =
-  rawUrl && rawUrl.startsWith("http")
-    ? rawUrl
-    : "https://placeholder.supabase.co";
+export const isSupabaseConfigured = Boolean(
+  rawUrl && rawUrl.startsWith("http") && rawKey && rawKey.length > 10
+);
 
-const supabaseAnonKey = rawKey || "placeholder-anon-key";
+if (!isSupabaseConfigured && typeof window !== "undefined") {
+  console.warn(
+    "[Supabase Client] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing. Guestbook is running in offline demo mode."
+  );
+}
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(
+  rawUrl && rawUrl.startsWith("http") ? rawUrl : "http://localhost:54321",
+  rawKey || "dummy-anon-key"
+);
 
 /* ============================================
    Database Type Definitions
@@ -21,6 +27,7 @@ export interface Contact {
   name: string;
   email: string;
   message: string;
+  ip_hash?: string;
   created_at: string;
 }
 
@@ -28,17 +35,7 @@ export interface Comment {
   id: string;
   guest_name: string;
   comment_text: string;
+  approved: boolean;
+  ip_hash?: string;
   created_at: string;
-}
-
-export interface GitHubRepo {
-  id: number;
-  name: string;
-  full_name: string;
-  description: string | null;
-  html_url: string;
-  language: string | null;
-  stargazers_count: number;
-  forks_count: number;
-  topics: string[];
 }
