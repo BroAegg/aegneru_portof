@@ -35,13 +35,13 @@ export default function Contact() {
         timestampToken: mountTimestampRef.current || undefined,
       });
       if (result.success) {
-        addToast("success", "Pesan berhasil terkirim! Saya akan segera merespons email Anda.");
+        addToast("success", "Message sent! I'll reply to your email shortly.");
         setFormData({ name: "", email: "", message: "" });
       } else {
-        addToast("error", result.error || "Gagal mengirim pesan.");
+        addToast("error", result.error || "Failed to send message. Please try again.");
       }
     } catch {
-      addToast("error", "Terjadi kesalahan koneksi. Silakan coba lagi.");
+      addToast("error", "Connection error. Please check your network and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -75,7 +75,7 @@ export default function Contact() {
               <MessageCircle className="h-5 w-5" />
             </div>
             <span className="font-heading text-sm font-bold text-foreground">WhatsApp</span>
-            <span className="mt-0.5 text-xs text-muted">+62 895-4161-85355</span>
+            <span className="mt-0.5 text-xs text-muted whitespace-nowrap">+62 895-4161-85355</span>
           </a>
 
           <a

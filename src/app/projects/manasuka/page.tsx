@@ -31,7 +31,7 @@ export default function ManasukaCaseStudy() {
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-purple-500/20 selection:text-purple-300">
       {/* Top sticky navigation bar */}
-      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#09090b]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#09090b]/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link
             href="/#showcase"
@@ -84,30 +84,30 @@ export default function ManasukaCaseStudy() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-space leading-tight">
-            Sistem ERP & POS Offline-First Koperasi Manasuka
+            ERP & Offline-First POS System — Koperasi Manasuka
           </h1>
 
           <p className="text-base sm:text-lg text-zinc-400 max-w-3xl leading-relaxed">
-            Arsitektur enterprise POS terdistribusi dengan pola antrean <span className="text-purple-300 font-medium">Outbox Pattern IndexedDB</span>, engine general ledger <span className="text-blue-300 font-medium">Double-Entry SAK-ETAP</span> di PostgreSQL ACID, dan driver pencetakan Bluetooth thermal native via Java RFCOMM SPP.
+            Distributed enterprise POS architecture with an <span className="text-purple-300 font-medium">IndexedDB Outbox Pattern</span> queue, a <span className="text-blue-300 font-medium">Double-Entry SAK-ETAP</span> general ledger engine on PostgreSQL ACID, and native Bluetooth thermal printing via Java RFCOMM SPP.
           </p>
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
             <div className="p-4 rounded-xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm">
               <div className="text-2xl sm:text-3xl font-bold text-white font-space">0 Downtime</div>
-              <div className="text-xs text-zinc-400 mt-1">2+ Bulan Live Operasional</div>
+              <div className="text-xs text-zinc-400 mt-1">2+ Months of Live Production</div>
             </div>
             <div className="p-4 rounded-xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm">
-              <div className="text-2xl sm:text-3xl font-bold text-purple-400 font-space">1.000+</div>
-              <div className="text-xs text-zinc-400 mt-1">Tx/Bulan Tanpa Kehilangan Data</div>
+              <div className="text-2xl sm:text-3xl font-bold text-purple-400 font-space">1,000+</div>
+              <div className="text-xs text-zinc-400 mt-1">Tx/Month — Zero Data Loss</div>
             </div>
             <div className="p-4 rounded-xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm">
-              <div className="text-2xl sm:text-3xl font-bold text-blue-400 font-space">&lt; 1,2 Detik</div>
-              <div className="text-xs text-zinc-400 mt-1">Struk Thermal Bluetooth SPP</div>
+              <div className="text-2xl sm:text-3xl font-bold text-blue-400 font-space">&lt; 1.2s</div>
+              <div className="text-xs text-zinc-400 mt-1">Thermal Receipt via Bluetooth SPP</div>
             </div>
             <div className="p-4 rounded-xl bg-zinc-900/50 border border-white/10 backdrop-blur-sm">
-              <div className="text-2xl sm:text-3xl font-bold text-emerald-400 font-space">&lt; 15 Detik</div>
-              <div className="text-xs text-zinc-400 mt-1">Audit Konsinyasi & SHU RAT (dari 3 Hari)</div>
+              <div className="text-2xl sm:text-3xl font-bold text-emerald-400 font-space">&lt; 15s</div>
+              <div className="text-xs text-zinc-400 mt-1">Consignment Audit & SHU (was 3 days)</div>
             </div>
           </div>
         </section>
@@ -116,7 +116,7 @@ export default function ManasukaCaseStudy() {
         <section className="space-y-6">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-purple-400" />
-            <h2 className="text-2xl font-bold text-white font-space">Problem Statement & Tantangan Bisnis</h2>
+            <h2 className="text-2xl font-bold text-white font-space">Problem Statement & Business Challenges</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -124,9 +124,9 @@ export default function ManasukaCaseStudy() {
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-red-500/10 text-red-400 border border-red-500/20">
                 <WifiOff className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Instabilitas Jaringan Kasir Fisik</h3>
+              <h3 className="text-lg font-semibold text-white">Network Instability at POS Terminals</h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Unit kasir minimarket dan gudang Koperasi Manasuka berada di lokasi dengan jangkauan seluler fluktuatif. Pada jam sibuk, terputusnya koneksi internet sering menyebabkan antrean kasir macet jika POS bergantung pada arsitektur web client-server murni. Sistem membutuhkan kemampuan transaksi kasir yang tetap berjalan lancar 100% tanpa internet.
+                Koperasi Manasuka&apos;s minimarket and warehouse cashier stations operate in locations with fluctuating cellular coverage. During peak hours, internet outages frequently stall the checkout queue when POS relies on a pure client-server web architecture. The system must process transactions 100% reliably without an internet connection.
               </p>
             </div>
 
@@ -134,9 +134,9 @@ export default function ManasukaCaseStudy() {
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
                 <Clock className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Keterlambatan Pembukuan & Audit RAT</h3>
+              <h3 className="text-lg font-semibold text-white">Delayed Bookkeeping & Annual Member Audit (RAT)</h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Sebelum digitalisasi, rekonsiliasi stok konsinyasi dari puluhan supplier dan penghitungan Sisa Hasil Usaha (SHU) untuk Rapat Anggota Tahunan (RAT) membutuhkan waktu hingga 3 hari kerja manual dengan spreadsheet. Hal ini rawan selisih kas, kesalahan FIFO pada barang konsinyasi, dan penundaan laporan keuangan regulatori.
+                Before digitization, reconciling consignment stock from dozens of suppliers and computing the profit-sharing distribution (SHU) for the Annual Members&apos; Assembly (RAT) took up to 3 manual working days using spreadsheets. This was prone to cash discrepancies, FIFO errors on consignment items, and regulatory reporting delays.
               </p>
             </div>
           </div>
@@ -146,11 +146,11 @@ export default function ManasukaCaseStudy() {
         <section className="space-y-6">
           <div className="flex items-center gap-2">
             <Layers className="w-5 h-5 text-blue-400" />
-            <h2 className="text-2xl font-bold text-white font-space">Arsitektur 1: Offline-First POS & Outbox Pattern</h2>
+            <h2 className="text-2xl font-bold text-white font-space">Architecture 1: Offline-First POS & Outbox Pattern</h2>
           </div>
 
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-            Untuk menjamin kasir dapat terus memproses transaksi tanpa koneksi internet, sistem mengimplementasikan pola <span className="text-zinc-200 font-semibold">Transactional Client Outbox</span>. Setiap transaksi di-commit seketika ke basis data lokal perangkat sebelum dikirimkan ke cloud.
+            To guarantee the checkout terminal can keep processing transactions without internet, the system implements the <span className="text-zinc-200 font-semibold">Transactional Client Outbox</span> pattern. Every transaction is instantly committed to the device&apos;s local database before being dispatched to the cloud.
           </p>
 
           {/* Inline SVG Diagram 1 */}
@@ -235,19 +235,19 @@ export default function ManasukaCaseStudy() {
           </div>
 
           <div className="space-y-3 text-sm text-zinc-400">
-            <h4 className="font-semibold text-zinc-200">Alur Eksekusi Transaksi Kasir:</h4>
+            <h4 className="font-semibold text-zinc-200">Transaction Execution Flow:</h4>
             <ol className="list-decimal list-inside space-y-2 pl-2">
               <li>
-                <strong className="text-zinc-200">Local Atomic Commit:</strong> Saat kasir menekan tombol bayar, transaksi dibuat dengan UUID v4 client-generated sebagai <code className="text-purple-300 font-mono">idempotency_key</code> dan langsung disimpan di store IndexedDB dengan status <code className="text-amber-400 font-mono">PENDING</code>.
+                <strong className="text-zinc-200">Local Atomic Commit:</strong> When the cashier taps &quot;Pay&quot;, the transaction is created with a client-generated UUID v4 as the <code className="text-purple-300 font-mono">idempotency_key</code> and immediately saved to the IndexedDB store with status <code className="text-amber-400 font-mono">PENDING</code>.
               </li>
               <li>
-                <strong className="text-zinc-200">Pencetakan Struk Instan:</strong> Struk langsung dicetak via Bluetooth thermal tanpa menunggu respons jaringan (eliminasi lag kasir).
+                <strong className="text-zinc-200">Instant Receipt Printing:</strong> The receipt is printed via Bluetooth thermal immediately — without waiting for a network response (eliminates cashier lag).
               </li>
               <li>
-                <strong className="text-zinc-200">Background Sync Worker:</strong> Listener jaringan mendeteksi koneksi online dan mengambil antrean transaksi pending berdasarkan urutan timestamp FIFO.
+                <strong className="text-zinc-200">Background Sync Worker:</strong> A network event listener detects online status and dequeues pending transactions in FIFO timestamp order.
               </li>
               <li>
-                <strong className="text-zinc-200">Server Idempotency Guard:</strong> Backend menerima payload batch, memeriksa keunikan <code className="text-purple-300 font-mono">idempotency_key</code> di PostgreSQL. Jika koneksi sempat drop saat pengiriman sebelumnya, server tidak akan memproses mutasi kas berulang. Setelah sukses di-commit, status lokal diubah menjadi <code className="text-emerald-400 font-mono">SYNCED</code>.
+                <strong className="text-zinc-200">Server Idempotency Guard:</strong> The backend receives a batch payload and verifies <code className="text-purple-300 font-mono">idempotency_key</code> uniqueness in PostgreSQL. If a previous send dropped mid-flight, the server returns the same success response without creating a duplicate journal entry. Once committed, the local record is updated to <code className="text-emerald-400 font-mono">SYNCED</code>.
               </li>
             </ol>
           </div>
@@ -257,11 +257,11 @@ export default function ManasukaCaseStudy() {
         <section className="space-y-6">
           <div className="flex items-center gap-2">
             <Database className="w-5 h-5 text-emerald-400" />
-            <h2 className="text-2xl font-bold text-white font-space">Arsitektur 2: Engine General Ledger Double-Entry (SAK-ETAP)</h2>
+            <h2 className="text-2xl font-bold text-white font-space">Architecture 2: Double-Entry General Ledger Engine (SAK-ETAP)</h2>
           </div>
 
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-            Koperasi Manasuka wajib mematuhi standar akuntansi entitas tanpa akuntabilitas publik (SAK-ETAP). Tidak ada angka keuangan yang disimpan sebagai kolom saldo statis bebas; seluruh saldo akun dihitung secara dinamis dari agregasi ayat jurnal berpasangan (<span className="text-zinc-200 font-semibold">Debit &amp; Kredit</span>) dalam transaksi PostgreSQL ACID.
+            Koperasi Manasuka must comply with the Indonesian accounting standard for non-publicly accountable entities (SAK-ETAP). No financial figure is stored as a free-standing static balance column; every account balance is computed dynamically from the aggregation of paired journal entries (<span className="text-zinc-200 font-semibold">Debit & Credit</span>) within PostgreSQL ACID transactions.
           </p>
 
           {/* Inline SVG Diagram 2 */}
@@ -334,7 +334,7 @@ export default function ManasukaCaseStudy() {
         <section className="space-y-8">
           <div className="flex items-center gap-2">
             <Cpu className="w-5 h-5 text-purple-400" />
-            <h2 className="text-2xl font-bold text-white font-space">Keputusan Desain &amp; Implementasi Teknis</h2>
+            <h2 className="text-2xl font-bold text-white font-space">Technical Design Decisions &amp; Implementation</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -342,25 +342,25 @@ export default function ManasukaCaseStudy() {
             <div className="p-6 rounded-2xl bg-zinc-900/40 border border-white/10 space-y-4">
               <div className="flex items-center gap-2 text-purple-400">
                 <Database className="w-5 h-5" />
-                <h3 className="text-lg font-semibold text-white">1. Mengapa IndexedDB, Bukan localStorage?</h3>
+                <h3 className="text-lg font-semibold text-white">1. Why IndexedDB Instead of localStorage?</h3>
               </div>
               <ul className="space-y-2 text-sm text-zinc-400">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-zinc-200">Kapasitas Penyimpanan:</strong> localStorage terbatas pada ~5MB per domain, sedangkan IndexedDB mampu menampung ratusan megabyte katalog produk, riwayat transaksi, dan cache gambar.
+                    <strong className="text-zinc-200">Storage Capacity:</strong> localStorage is capped at ~5MB per domain, while IndexedDB can hold hundreds of megabytes of product catalogs, transaction history, and image caches.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-zinc-200">Non-blocking Asynchronous I/O:</strong> localStorage bersifat synchronous dan memblokir UI thread saat menulis nota belanja panjang. IndexedDB berjalan secara asynchronous melalui event loop.
+                    <strong className="text-zinc-200">Non-blocking Async I/O:</strong> localStorage is synchronous and blocks the UI thread when writing large receipts. IndexedDB runs asynchronously via the event loop.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-zinc-200">Compound Indexing:</strong> Indeks majemuk <code className="text-xs bg-zinc-800 text-purple-300 px-1 py-0.5 rounded font-mono">[status, created_at]</code> memungkinkan pengambilan antrean pending dalam hitungan sub-milidetik.
+                    <strong className="text-zinc-200">Compound Indexing:</strong> A compound index on <code className="text-xs bg-zinc-800 text-purple-300 px-1 py-0.5 rounded font-mono">[status, created_at]</code> enables sub-millisecond retrieval of the pending queue.
                   </span>
                 </li>
               </ul>
@@ -370,25 +370,25 @@ export default function ManasukaCaseStudy() {
             <div className="p-6 rounded-2xl bg-zinc-900/40 border border-white/10 space-y-4">
               <div className="flex items-center gap-2 text-blue-400">
                 <RefreshCw className="w-5 h-5" />
-                <h3 className="text-lg font-semibold text-white">2. Strategi Penanganan Konflik Sinkronisasi</h3>
+                <h3 className="text-lg font-semibold text-white">2. Sync Conflict Resolution Strategy</h3>
               </div>
               <ul className="space-y-2 text-sm text-zinc-400">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-zinc-200">Server Authority with Idempotency Token:</strong> Server bertindak sebagai sumber kebenaran tunggal (<em className="italic">single source of truth</em>). Setiap request mutasi menyertakan UUID unik klien.
+                    <strong className="text-zinc-200">Server Authority with Idempotency Token:</strong> The server is the single source of truth. Every mutation request carries a client-unique UUID.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-zinc-200">Penanganan Duplikasi Jaringan:</strong> Bila terjadi retry akibat network timeout, server mengembalikan status sukses yang sama tanpa mengeksekusi jurnal ganda.
+                    <strong className="text-zinc-200">Network Duplicate Handling:</strong> On network timeout retries, the server returns the same success response without executing a duplicate journal entry.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-zinc-200">Alokasi Stok FIFO:</strong> Pengurangan stok konsinyasi menggunakan nomor batch dan timestamp server untuk mencegah inkonsistensi multi-kasir.
+                    <strong className="text-zinc-200">FIFO Stock Allocation:</strong> Consignment stock deductions use server-side batch numbers and timestamps to prevent multi-terminal inconsistency.
                   </span>
                 </li>
               </ul>
@@ -398,22 +398,22 @@ export default function ManasukaCaseStudy() {
             <div className="p-6 rounded-2xl bg-zinc-900/40 border border-white/10 space-y-4">
               <div className="flex items-center gap-2 text-emerald-400">
                 <Printer className="w-5 h-5" />
-                <h3 className="text-lg font-semibold text-white">3. Integrasi Thermal Printer Bluetooth ESC/POS</h3>
+                <h3 className="text-lg font-semibold text-white">3. Bluetooth ESC/POS Thermal Printer Integration</h3>
               </div>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Cetak struk kasir melalui browser web konvensional (dialog print OS) terlalu lambat dan sering terputus. Solusinya:
+                Printing receipts through a conventional browser print dialog is too slow and unreliable. The solution:
               </p>
               <ul className="space-y-2 text-sm text-zinc-400">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    Membangun jembatan native via <strong className="text-zinc-200">Capacitor Custom Plugin</strong> ke Java Android socket <code className="text-xs bg-zinc-800 text-purple-300 px-1 py-0.5 rounded font-mono">BluetoothDevice.createRfcommSocketToServiceRecord</code> (SPP UUID).
+                    Built a native bridge via a <strong className="text-zinc-200">Capacitor Custom Plugin</strong> to the Java Android socket <code className="text-xs bg-zinc-800 text-purple-300 px-1 py-0.5 rounded font-mono">BluetoothDevice.createRfcommSocketToServiceRecord</code> (SPP UUID).
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    Mengirimkan buffer byte biner murni command <strong className="text-zinc-200">ESC/POS (58mm/80mm)</strong> tanpa render grafik HTML, memangkas durasi cetak struk hingga <strong className="text-emerald-400">&lt; 1,2 detik</strong>.
+                    Sends raw binary <strong className="text-zinc-200">ESC/POS (58mm/80mm)</strong> byte buffers without HTML rendering, cutting receipt print time to <strong className="text-emerald-400">&lt; 1.2 seconds</strong>.
                   </span>
                 </li>
               </ul>
@@ -423,22 +423,22 @@ export default function ManasukaCaseStudy() {
             <div className="p-6 rounded-2xl bg-zinc-900/40 border border-white/10 space-y-4">
               <div className="flex items-center gap-2 text-amber-400">
                 <Zap className="w-5 h-5" />
-                <h3 className="text-lg font-semibold text-white">4. Optimasi SQL: Konsinyasi FIFO &amp; SHU RAT</h3>
+                <h3 className="text-lg font-semibold text-white">4. SQL Optimization: FIFO Consignment &amp; SHU RAT</h3>
               </div>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Kalkulasi dividen tahunan (SHU) koperasi melibatkan agregasi bobot modal simpanan dan volume belanja seluruh anggota:
+                Annual profit-sharing computation (SHU) involves aggregating savings capital weights and purchase volumes across all cooperative members:
               </p>
               <ul className="space-y-2 text-sm text-zinc-400">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    Menggantikan kalkulasi looping di application layer dengan <strong className="text-zinc-200">Common Table Expressions (CTEs)</strong> dan PostgreSQL Window Functions yang terindeks pada <code className="text-xs bg-zinc-800 text-purple-300 px-1 py-0.5 rounded font-mono">(member_id, fiscal_year)</code>.
+                    Replaced application-layer loops with <strong className="text-zinc-200">Common Table Expressions (CTEs)</strong> and PostgreSQL Window Functions indexed on <code className="text-xs bg-zinc-800 text-purple-300 px-1 py-0.5 rounded font-mono">(member_id, fiscal_year)</code>.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>
-                    Durasi kompilasi laporan audit konsinyasi dan pembagian SHU RAT dipangkas dari <strong className="text-zinc-200">3 hari kerja manual</strong> menjadi <strong className="text-emerald-400">&lt; 15 detik</strong>.
+                    Consignment audit compilation and SHU RAT distribution reduced from <strong className="text-zinc-200">3 manual working days</strong> to <strong className="text-emerald-400">&lt; 15 seconds</strong>.
                   </span>
                 </li>
               </ul>
@@ -450,53 +450,53 @@ export default function ManasukaCaseStudy() {
         <section className="space-y-6">
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-emerald-400" />
-            <h2 className="text-2xl font-bold text-white font-space">Metrik Validasi Produksi</h2>
+            <h2 className="text-2xl font-bold text-white font-space">Production Validation Metrics</h2>
           </div>
 
           <div className="overflow-x-auto rounded-2xl border border-white/10 bg-zinc-900/30">
             <table className="w-full text-left text-sm">
               <thead className="bg-zinc-800/50 text-xs uppercase tracking-wider text-zinc-400 border-b border-white/10">
                 <tr>
-                  <th scope="col" className="px-6 py-4">Parameter Sistem</th>
-                  <th scope="col" className="px-6 py-4">Sebelum Sistem</th>
-                  <th scope="col" className="px-6 py-4">Setelah Implementasi</th>
-                  <th scope="col" className="px-6 py-4">Dampak &amp; Reliabilitas</th>
+                  <th scope="col" className="px-6 py-4">System Parameter</th>
+                  <th scope="col" className="px-6 py-4">Before System</th>
+                  <th scope="col" className="px-6 py-4">After Implementation</th>
+                  <th scope="col" className="px-6 py-4">Impact & Reliability</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5 text-zinc-300">
                 <tr className="hover:bg-white/[0.02]">
                   <td className="px-6 py-4 font-medium text-white flex items-center gap-2">
                     <FileText className="w-4 h-4 text-purple-400" />
-                    Ketahanan Jaringan Kasir
+                    POS Terminal Network Reliability
                   </td>
-                  <td className="px-6 py-4 text-zinc-500">Antrean macet saat internet drop</td>
+                  <td className="px-6 py-4 text-zinc-500">Queue stalls on internet drop</td>
                   <td className="px-6 py-4 text-emerald-400 font-semibold">100% Offline-First (Outbox)</td>
-                  <td className="px-6 py-4 text-zinc-400">1.000+ transaksi bulanan tanpa data hilang</td>
+                  <td className="px-6 py-4 text-zinc-400">1,000+ monthly transactions — zero data loss</td>
                 </tr>
                 <tr className="hover:bg-white/[0.02]">
                   <td className="px-6 py-4 font-medium text-white flex items-center gap-2">
                     <Clock className="w-4 h-4 text-amber-400" />
-                    Durasi Audit RAT &amp; Konsinyasi
+                    RAT Audit & Consignment Duration
                   </td>
-                  <td className="px-6 py-4 text-zinc-500">3 hari kerja kompilasi nota fisik</td>
-                  <td className="px-6 py-4 text-emerald-400 font-semibold">&lt; 15 detik (SQL FIFO)</td>
-                  <td className="px-6 py-4 text-zinc-400">Otomatisasi neraca &amp; laporan laba rugi</td>
+                  <td className="px-6 py-4 text-zinc-500">3 working days of manual note compilation</td>
+                  <td className="px-6 py-4 text-emerald-400 font-semibold">&lt; 15 seconds (SQL FIFO)</td>
+                  <td className="px-6 py-4 text-zinc-400">Automated balance sheet & income statement</td>
                 </tr>
                 <tr className="hover:bg-white/[0.02]">
                   <td className="px-6 py-4 font-medium text-white flex items-center gap-2">
                     <Printer className="w-4 h-4 text-blue-400" />
-                    Kecepatan Cetak Struk Kasir
+                    Cashier Receipt Print Speed
                   </td>
-                  <td className="px-6 py-4 text-zinc-500">4 - 6 detik via browser print dialog</td>
-                  <td className="px-6 py-4 text-emerald-400 font-semibold">&lt; 1,2 detik (RFCOMM SPP)</td>
-                  <td className="px-6 py-4 text-zinc-400">Pencetakan raw byte ESC/POS instan</td>
+                  <td className="px-6 py-4 text-zinc-500">4–6 seconds via browser print dialog</td>
+                  <td className="px-6 py-4 text-emerald-400 font-semibold">&lt; 1.2 seconds (RFCOMM SPP)</td>
+                  <td className="px-6 py-4 text-zinc-400">Raw ESC/POS byte printing — instant</td>
                 </tr>
                 <tr className="hover:bg-white/[0.02]">
                   <td className="px-6 py-4 font-medium text-white flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    Kepatuhan Akuntansi
+                    Accounting Compliance
                   </td>
-                  <td className="px-6 py-4 text-zinc-500">Pencatatan saldo manual rentan selisih</td>
+                  <td className="px-6 py-4 text-zinc-500">Manual balance entry prone to discrepancy</td>
                   <td className="px-6 py-4 text-emerald-400 font-semibold">SAK-ETAP Double-Entry</td>
                   <td className="px-6 py-4 text-zinc-400">PostgreSQL ACID Transaction Boundaries</td>
                 </tr>
@@ -507,7 +507,7 @@ export default function ManasukaCaseStudy() {
 
         {/* Tech Stack Summary */}
         <section className="space-y-4">
-          <h3 className="text-lg font-bold text-white font-space">Teknologi yang Digunakan</h3>
+          <h3 className="text-lg font-bold text-white font-space">Technologies Used</h3>
           <div className="flex flex-wrap gap-2">
             {[
               "Next.js",
@@ -539,7 +539,7 @@ export default function ManasukaCaseStudy() {
             className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-white/10 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>Kembali ke Portofolio Utama</span>
+            <span>Back to Portfolio</span>
           </Link>
 
           <div className="flex items-center gap-3">
@@ -549,7 +549,7 @@ export default function ManasukaCaseStudy() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl bg-purple-600 hover:bg-purple-500 text-white transition-colors"
             >
-              <span>Buka Demo Aplikasi</span>
+              <span>Open Live Demo</span>
               <ExternalLink className="w-4 h-4" />
             </a>
             <a

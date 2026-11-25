@@ -140,14 +140,14 @@ export default function Guestbook() {
       if (result.success) {
         addToast(
           "success",
-          result.message || "Terima kasih! Pesan akan tampil setelah dimoderasi."
+          result.message || "Thank you! Your message will appear after moderation."
         );
         setFormData({ guest_name: "", comment_text: "" });
       } else {
-        addToast("error", result.error || "Gagal memposting komentar.");
+        addToast("error", result.error || "Failed to post comment. Please try again.");
       }
     } catch {
-      addToast("error", "Terjadi kesalahan koneksi. Silakan coba lagi.");
+      addToast("error", "Connection error. Please check your network and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -162,14 +162,13 @@ export default function Guestbook() {
           title="Guestbook"
           subtitle="Leave a message — comments are reviewed for a professional, spam-free environment."
         />
-
         <div className="mx-auto max-w-2xl">
           {/* Offline Notice if Supabase is unconfigured */}
           {!isSupabaseConfigured && (
-            <div className="mb-6 flex items-center gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-xs text-amber-300">
-              <WifiOff className="h-4 w-4 shrink-0 text-amber-400" />
+            <div className="mb-6 flex items-center gap-3 rounded-xl border border-zinc-700/50 bg-zinc-800/40 p-4 text-xs text-zinc-400">
+              <WifiOff className="h-4 w-4 shrink-0 text-zinc-500" />
               <span>
-                Guestbook sedang berjalan dalam mode offline (Database belum dikonfigurasi).
+                Guestbook is currently in read-only mode. Database configuration pending — messages will be enabled soon.
               </span>
             </div>
           )}
@@ -207,7 +206,7 @@ export default function Guestbook() {
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, guest_name: e.target.value }))
                 }
-                placeholder="Nama Anda (maks. 50 karakter)"
+                placeholder="Your name (max. 50 characters)"
                 maxLength={50}
                 required
                 className="w-full rounded-xl border border-dark-border bg-dark py-2.5 px-4 text-sm text-foreground placeholder:text-muted/40 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-all"
@@ -230,7 +229,7 @@ export default function Guestbook() {
                       comment_text: e.target.value,
                     }))
                   }
-                  placeholder="Tulis pesan atau komentar..."
+                  placeholder="Write a message, impression, or feedback..."
                   required
                   maxLength={500}
                   className="flex-1 rounded-xl border border-dark-border bg-dark py-2.5 px-4 text-sm text-foreground placeholder:text-muted/40 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-all"
@@ -252,7 +251,7 @@ export default function Guestbook() {
             <div className="flex items-center justify-between text-xs text-muted/60">
               <span className="flex items-center gap-1 text-[11px] text-muted/70">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                Dimoderasi manual sebelum tayang publik
+                Moderated manually before going public
               </span>
               <span>{formData.comment_text.length}/500</span>
             </div>
@@ -275,7 +274,7 @@ export default function Guestbook() {
               >
                 <MessageCircle className="mx-auto mb-3 h-8 w-8 text-muted/30" />
                 <p className="text-sm text-muted/50">
-                  Belum ada pesan yang disetujui. Jadilah yang pertama meninggalkan pesan!
+                  No messages yet. Be the first to leave one!
                 </p>
               </motion.div>
             ) : (
